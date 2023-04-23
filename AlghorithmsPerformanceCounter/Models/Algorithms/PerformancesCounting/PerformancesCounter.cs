@@ -13,8 +13,8 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting
         Stopwatch stopwatch = new Stopwatch();
         private readonly string algorithmName;
 
-        public long ActionsTaken => actionsTaken;
-        public Stopwatch Stopwatch => stopwatch;
+		public long ActionsTaken => actionsTaken;
+		public Stopwatch Stopwatch => stopwatch;
 
         public string AlgorithmName => algorithmName;
         public void IncrementActionsTaken()

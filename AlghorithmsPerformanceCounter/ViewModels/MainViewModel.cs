@@ -12,9 +12,9 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 {
 	public class MainViewModel : INotifyPropertyChanged
 	{
-		private const int MinValue = 1;
-		private const int MaxValue = 10000;
-		private int _numberOfArrays =1;
+		private const int MinValuesPerArray = 1;
+		private const int MaxValuesPerArray = 10000;
+		private int _numberOfArrays =2;
 		private int _numberOfValuesPerArray =1;
 		IArrayInitializer arrayInitializer = Factory.CreateArrayInitializer;
 		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_numberOfArrays, _numberOfValuesPerArray); }
@@ -42,7 +42,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			{
 				if (_numberOfValuesPerArray != value)
 				{
-					_numberOfValuesPerArray = Math.Clamp(value, MinValue, MaxValue);
+					_numberOfValuesPerArray = Math.Clamp(value, MinValuesPerArray, MaxValuesPerArray);
 					OnPropertyChanged(nameof(NumberOfValuesPerArray));
 				}
 			}

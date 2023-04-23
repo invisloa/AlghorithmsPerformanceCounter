@@ -29,7 +29,7 @@ namespace AlghorithmsPerformanceCounter.Models.ArrayInitializers
 			arrayOfArrays[0] = firstArray;
 			if (numberOfArrays > 2)
 			{
-				for (int i = 1; i < numberOfArrays -2; i++)
+				for (int i = 1; i < numberOfArrays -1; i++)
 				{
 					int currentArraySize = (maxNumberOfValues / numberOfArrays) * i;
 					int[] arrayToAdd = new int[currentArraySize];

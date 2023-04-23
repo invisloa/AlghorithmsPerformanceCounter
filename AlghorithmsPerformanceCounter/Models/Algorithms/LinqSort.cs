@@ -21,6 +21,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 
 		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
+			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
 			performanceCounter.Stopwatch.Start();

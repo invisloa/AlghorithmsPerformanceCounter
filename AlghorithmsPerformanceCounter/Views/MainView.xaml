@@ -8,17 +8,17 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width = "*" />
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Number of Arrays (1-10):" />
+                <TextBlock Text="Number of Arrays:" />
                 <TextBlock  Grid.Column="1" x:Name="HowManyArraysLabel" Text="{Binding NumberOfArrays}" HorizontalAlignment="Right"/>
             </Grid>
-            <Slider x:Name="NumberOfArraysSlider" Minimum="1" Maximum="10" TickFrequency="1" IsSnapToTickEnabled="True"  Margin="0,0,0,20" Value="{Binding NumberOfArrays}"/>
-            <TextBlock Text="Number of Random Values per Array:" Margin="0,0,0,5"/>
+            <Slider x:Name="NumberOfArraysSlider" Minimum="2" Maximum="10" TickFrequency="1" IsSnapToTickEnabled="True"  Margin="0,0,0,20" Value="{Binding NumberOfArrays}"/>
+            <TextBlock Text="Max array size:" Margin="0,0,0,5"/>
             <TextBox x:Name="NumberOfRandomValuesInput" Margin="0,0,0,20" PreviewTextInput="NumberOfRandomValuesInput_PreviewTextInput" Text="{Binding NumberOfValuesPerArray, UpdateSourceTrigger=PropertyChanged}" />
             <Button x:Name="NavigateToChartViewButton" Content="Show Charts" Click="NavigateToChartViewButton_Click" />
         </StackPanel>
