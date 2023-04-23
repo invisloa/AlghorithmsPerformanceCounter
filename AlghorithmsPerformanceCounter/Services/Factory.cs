@@ -34,7 +34,7 @@ namespace AlghorithmsPerformanceCounter.Services
 
 		#endregion
 
-		public static IArraySorterPerformanceCounter CreateMultiAlgorithmsSorter => new ArraySorterPerformanceCounter(AllSortingAlgorithmsList);
+		public static IAllAlgorithmsPerformanceCounter CreateMultiAlgorithmsSorter => new AllAlgorithmsPerformance(AllSortingAlgorithmsList);
 
 		public static PerformancesCounter CreatePerformanceCounter(string algorithmName)
 		{

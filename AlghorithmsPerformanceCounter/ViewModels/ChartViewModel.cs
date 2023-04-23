@@ -12,7 +12,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
     public class ChartViewModel
     {
 		private MainViewModel _mainWindowViewModel;
-		IArraySorterPerformanceCounter multiAlgorithmsSorter { get => Factory.CreateMultiAlgorithmsSorter; }
+		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter { get => Factory.CreateMultiAlgorithmsSorter; }
 
 		public ChartViewModel(MainViewModel mainWindowViewModel)
 		{
