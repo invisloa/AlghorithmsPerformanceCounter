@@ -2,6 +2,7 @@
 using AlghorithmsPerformanceCounter.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,31 +11,23 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
     internal class Heapsort : AbstractSortingAlgorithm
 	{
-		private PerformancesCounter performanceCounter;
-
-		public PerformancesCounter PerformanceCounter { get => performanceCounter; }
-
-		public Heapsort()
-		{
-			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
-		}
-
 		public override string ToString() { return "Heap Sort"; }
 		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
+			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
 			performanceCounter.Stopwatch.Start();
-			Heap_sort(copyArrayToSort);
+			Heap_sort(copyArrayToSort, performanceCounter);
 			performanceCounter.Stopwatch.Stop();
 			return performanceCounter;
 		}
-		public void Heap_sort(int[] arr)
+		public void Heap_sort(int[] arr, IAlgorithmPerformanceCounter performanceCounter)
 		{
 			int n = arr.Length;
 			// Build heap (rearrange array)
 			for (int i = n / 2 - 1; i >= 0; i--)
-				Heapify(arr, n, i);
+				Heapify(arr, n, i, performanceCounter);
 			// One by one extract an element from heap
 			for (int i = n - 1; i >= 0; i--)
 			{
@@ -43,11 +36,11 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 				arr[0] = arr[i];
 				arr[i] = temp;
 				// call max heapify on the reduced heap
-				Heapify(arr, i, 0);
+				Heapify(arr, i, 0, performanceCounter);
 			}
 		}
 
-		public void Heapify(int[] arr, int n, int i)
+		public void Heapify(int[] arr, int n, int i, IAlgorithmPerformanceCounter performanceCounter)
 		{
 			performanceCounter.IncrementActionsTaken();   // every Heapify in a heapsort is a meaningfull action
 			int largest = i; // Initialize largest as root
@@ -66,7 +59,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 				arr[i] = arr[largest];
 				arr[largest] = swap;
 				// Recursively heapify the affected sub-tree
-				Heapify(arr, n, largest);
+				Heapify(arr, n, largest, performanceCounter);
 			}
 		}
 

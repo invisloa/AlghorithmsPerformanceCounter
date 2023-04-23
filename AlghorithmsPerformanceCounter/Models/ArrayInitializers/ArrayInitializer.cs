@@ -29,18 +29,18 @@ namespace AlghorithmsPerformanceCounter.Models.ArrayInitializers
 			arrayOfArrays[0] = firstArray;
 			if (numberOfArrays > 2)
 			{
-				for (int i = 1; i < numberOfArrays -1; i++)
+				for (int i = 1; i < numberOfArrays - 1; i++)
 				{
-					int currentArraySize = (maxNumberOfValues / numberOfArrays) * i;
+					int calculatedSize = (maxNumberOfValues / numberOfArrays) * i;
+					int currentArraySize = Math.Min(calculatedSize, maxNumberOfValues);
 					int[] arrayToAdd = new int[currentArraySize];
 					Array.Copy(baseArray, 0, arrayToAdd, 0, currentArraySize);
 					arrayOfArrays[i] = arrayToAdd;
 				}
 			}
-			arrayOfArrays[numberOfArrays-1] = baseArray;
+			arrayOfArrays[numberOfArrays - 1] = baseArray;
 			return arrayOfArrays;
 		}
-
 		int ValuesRandoizer()
 		{
 			return random.Next(1, 1001);

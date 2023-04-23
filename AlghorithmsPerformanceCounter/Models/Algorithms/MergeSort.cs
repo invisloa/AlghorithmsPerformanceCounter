@@ -11,10 +11,6 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
     internal class MergeSort : AbstractSortingAlgorithm
 	{
-		public MergeSort()
-		{
-		}
-
 		public override string ToString() { return "Merge Sort"; }
 		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
@@ -22,11 +18,11 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
 			performanceCounter.Stopwatch.Start();
-			MSort(copyArrayToSort);
+			MSort(copyArrayToSort, performanceCounter);
 			performanceCounter.Stopwatch.Stop();
 			return performanceCounter;
 		}
-		void MSort(int[] arr)
+		void MSort(int[] arr, IAlgorithmPerformanceCounter performanceCounter)
 		{
 			if (arr.Length < 2)
 			{
@@ -40,16 +36,16 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			Array.Copy(arr, 0, left, 0, mid);
 			Array.Copy(arr, mid, right, 0, arr.Length - mid);
 
-			MSort(left);
-			MSort(right);
+			MSort(left, performanceCounter);
+			MSort(right, performanceCounter);
 
-			Merge(arr, left, right);
-			PerformanceCounter.Stopwatch.Stop();
+			Merge(arr, left, right, performanceCounter);
+			performanceCounter.Stopwatch.Stop();
 		}
 
-		void Merge(int[] arr, int[] left, int[] right)
+		void Merge(int[] arr, int[] left, int[] right, IAlgorithmPerformanceCounter performanceCounter)
 		{
-			PerformanceCounter.IncrementActionsTaken(); // merge is a meaningful operation (consulted)
+			performanceCounter.IncrementActionsTaken(); // merge is a meaningful operation (consulted)
 
 			int i = 0;
 			int j = 0;

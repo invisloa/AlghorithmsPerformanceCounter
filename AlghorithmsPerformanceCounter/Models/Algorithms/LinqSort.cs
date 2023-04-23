@@ -10,18 +10,10 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
     internal class LinqSort : AbstractSortingAlgorithm
 	{
-		private PerformancesCounter performanceCounter;
-
-		public PerformancesCounter PerformanceCounter { get => performanceCounter; }
-
-		public LinqSort()
-		{
-			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
-		}
-
 		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
-			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
+			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
+
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
 			performanceCounter.Stopwatch.Start();
@@ -29,8 +21,6 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			performanceCounter.Stopwatch.Stop();
 			return performanceCounter;
 		}
-
-
 		public override string ToString() { return "Linq Sort"; }
 	}
 }

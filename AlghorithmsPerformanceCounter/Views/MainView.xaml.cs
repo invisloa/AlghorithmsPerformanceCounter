@@ -13,7 +13,6 @@ namespace AlghorithmsPerformanceCounter
 			InitializeComponent();
 			DataContext = new MainViewModel();
 		}
-
 		private void NumberOfRandomValuesInput_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
 		{
 			if (!int.TryParse(e.Text, out _))
@@ -21,7 +20,6 @@ namespace AlghorithmsPerformanceCounter
 				e.Handled = true;
 			}
 		}
-
 		private void NavigateToChartViewButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			// Get the MainViewModel object from the DataContext
@@ -30,7 +28,6 @@ namespace AlghorithmsPerformanceCounter
 			{
 				throw new InvalidOperationException("DataContext is not set to a MainViewModel object.");
 			}
-
 			// Create a new instance of the ChartViewModel and set its MainViewModel property to the current instance
 			var chartViewModel = new ChartViewModel(mainWindowViewModel);
 
@@ -38,7 +35,7 @@ namespace AlghorithmsPerformanceCounter
 			var chartView = new ChartView(chartViewModel);
 
 			// Raise the NavigateToChartView event with the ChartView as the sender
-			NavigateToChartView?.Invoke(chartView, EventArgs.Empty);
+			NavigateToChartView?.Invoke(chartView, EventArgs.Empty);							//ERROR!!!
 		}
 	}
 }

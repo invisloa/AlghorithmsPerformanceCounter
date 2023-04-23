@@ -7,19 +7,10 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
     internal class BubleSort : AbstractSortingAlgorithm
 	{
-		private PerformancesCounter performanceCounter;
-
-		public PerformancesCounter PerformanceCounter { get => performanceCounter; }
-
-		public BubleSort()
-		{
-			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
-		}
-
-
 		public override string ToString() { return "Buble Sort"; }
 		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
+			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
 			performanceCounter.Stopwatch.Start();

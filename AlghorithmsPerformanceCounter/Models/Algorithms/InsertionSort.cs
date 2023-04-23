@@ -11,26 +11,18 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
     internal class InsertionSort : AbstractSortingAlgorithm
 	{
-		private PerformancesCounter performanceCounter;
-
-		public PerformancesCounter PerformanceCounter { get => performanceCounter; }
-
-		public InsertionSort()
-		{
-			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
-		}
-
 		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
+			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
 			performanceCounter.Stopwatch.Start();
-			InsSort(copyArrayToSort);
+			InsSort(copyArrayToSort, performanceCounter);
 			performanceCounter.Stopwatch.Stop();
 			return performanceCounter;
 		}
 		public override string ToString() { return "Insertion Sort"; }
-		public void InsSort(int[] arr)
+		public void InsSort(int[] arr, IAlgorithmPerformanceCounter performanceCounter)
 		{
 			int n = arr.Length;
 			for (int i = 1; i < n; ++i)
@@ -38,15 +30,12 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 				performanceCounter.IncrementActionsTaken(); 
 				int key = arr[i];
 				int j = i - 1;
-
-				/* Move elements of arr[0..i-1], that are greater than key, to one position ahead
-				   of their current position */
 				while (j >= 0 && arr[j] > key)
 				{
 					arr[j + 1] = arr[j];
 					j = j - 1;
 				}
-				arr[j + 1] = key;		// Set the key to the next array element
+				arr[j + 1] = key;
 			}
 		}
 	}

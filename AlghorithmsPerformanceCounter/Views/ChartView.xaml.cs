@@ -16,21 +16,15 @@ using System.Windows.Shapes;
 
 namespace AlghorithmsPerformanceCounter
 {
-	/// <summary>
-	/// Interaction logic for ChartView.xaml
-	/// </summary>
 	public partial class ChartView : UserControl
 	{
 		public ChartView(ChartViewModel chartViewModel)
 		{
 			InitializeComponent();
-
 			// Set the DataContext to the passed-in ChartViewModel
 			DataContext = chartViewModel;
 		}
-
 		public event EventHandler NavigateBackToMainView;
-
 		private void BackToMainViewButton_Click(object sender, RoutedEventArgs e)
 		{
 			NavigateBackToMainView?.Invoke(this, EventArgs.Empty);

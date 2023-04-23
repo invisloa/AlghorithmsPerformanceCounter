@@ -12,6 +12,5 @@ namespace AlghorithmsPerformanceCounter.Services
 		ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>> SortMultipleArrays(int[][] arraysToSort);
 		public int TotalNumberOfArraysToSort { get; }
 		public int TotalNumberOfValuesInArray { get; }
-
 	}
 }

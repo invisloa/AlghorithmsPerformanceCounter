@@ -8,6 +8,7 @@ namespace AlghorithmsPerformanceCounter
 	{
 		public MainWindow()
 		{
+			DataContext = new MainViewModel();
 			InitializeComponent();
 		}
 
