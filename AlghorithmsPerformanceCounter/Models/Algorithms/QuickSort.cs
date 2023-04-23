@@ -1,4 +1,4 @@
-﻿using AlghorithmsPerformanceCounter.Models.Algorithms;
+﻿using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
 using AlghorithmsPerformanceCounter.Services;
 using System;
 using System.Collections.Generic;
@@ -9,22 +9,31 @@ using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
-	public class Quicksort : AbstractSortingAlgorithm
+    public class Quicksort : AbstractSortingAlgorithm
 	{
+		private PerformancesCounter performanceCounter;
+
+		public PerformancesCounter PerformanceCounter { get => performanceCounter; }
+
+		public Quicksort()
+		{
+			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
+		}
+
 		public override string ToString() { return "Quick Sort"; }
-		public override int[] SortArray(int[] array) // override the SortArray method to sort an single array
+		public override IAlgorithmPerformanceCounter SortArray(int[] array) // override the SortArray method to sort an single array
 		{
 			int[] copyArrayToSort = new int[array.Length]; // create a new integer array with the same length as the input array
 			Array.Copy(array, copyArrayToSort, array.Length); // copy the input array to the new array
-			stopwatch.Start(); // start a stopwatch to measure the execution time
+			performanceCounter.Stopwatch.Start();
 			QSort(copyArrayToSort, 0, copyArrayToSort.Length - 1); // call the QSort method to sort the new array
-			stopwatch.Stop(); // stop the stopwatch
-			return copyArrayToSort; // return the sorted array
+			performanceCounter.Stopwatch.Stop(); // stop the stopwatch
+			return performanceCounter; // return the sorted array
 		}
 
 		public void QSort(int[] array, int left, int right) // define a method called QSort that takes an integer array and the left and right indices of the sub-array to sort
 		{
-			actionsTaken++; // increment the actionsTaken counter on every recursive call to QSort
+			performanceCounter.IncrementActionsTaken(); // increment the actionsTaken counter on every recursive call to QSort
 
 			if (left < right) // if the sub-array has more than one element
 			{

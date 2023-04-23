@@ -10,18 +10,19 @@ using System.Windows.Input;
 
 namespace AlghorithmsPerformanceCounter.ViewModels
 {
-	internal class MainWindowViewModel : INotifyPropertyChanged
+	public class MainViewModel : INotifyPropertyChanged
 	{
-		private int _numberOfArrays;
+		private const int MinValue = 1;
+		private const int MaxValue = 10000;
+		private int _numberOfArrays =1;
+		private int _numberOfValuesPerArray =1;
 		IArrayInitializer arrayInitializer = Factory.CreateArrayInitializer;
-		IArraySorterPerformanceCounter multiAlgorithmsSorter = Factory.CreateMultiAlgorithmsSorter;
-		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(); }
+		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_numberOfArrays, _numberOfValuesPerArray); }
 
-		public MainWindowViewModel()
+		public MainViewModel()
 		{
 
 		}
-
 		public int NumberOfArrays
 		{
 			get { return _numberOfArrays; }
@@ -34,16 +35,22 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				}
 			}
 		}
-
+		public int NumberOfValuesPerArray
+		{
+			get { return _numberOfValuesPerArray; }
+			set
+			{
+				if (_numberOfValuesPerArray != value)
+				{
+					_numberOfValuesPerArray = Math.Clamp(value, MinValue, MaxValue);
+					OnPropertyChanged(nameof(NumberOfValuesPerArray));
+				}
+			}
+		}
 		public event PropertyChangedEventHandler PropertyChanged;
-
 		protected virtual void OnPropertyChanged(string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
-
-
-
-
 	}
 }

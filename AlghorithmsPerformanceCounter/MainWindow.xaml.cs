@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlghorithmsPerformanceCounter.ViewModels;
+using System;
 using System.Windows;
 
 namespace AlghorithmsPerformanceCounter
@@ -18,7 +19,10 @@ namespace AlghorithmsPerformanceCounter
 		}
 		private void MainView_NavigateToChartView(object sender, EventArgs e)
 		{
-			var chartView = new ChartView();
+			var mainWindowViewModel = DataContext as MainViewModel;                              // XXXXXXXXXXXXXXXXXXXXXXXXXXXXX ERROR
+			var chartViewModel = new ChartViewModel(mainWindowViewModel);
+
+			var chartView = new ChartView(chartViewModel);
 			chartView.NavigateBackToMainView += ChartView_NavigateBackToMainView;
 			MainContentControl.Content = chartView;
 		}

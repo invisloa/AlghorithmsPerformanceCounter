@@ -6,7 +6,7 @@ namespace AlghorithmsPerformanceCounter.Services
 {
 	public interface IArraySorterPerformanceCounter
 	{
-		List<IAlgorithmPerformanceCounter> AllUsedAlgoritms { get; }
+		List<AbstractSortingAlgorithm> AllUsedAlgoritms { get; }
 		void SortMultipleArrays(int[][] arraysToSort);
 		public int TotalNumberOfArraysToSort { get; }
 		public int TotalNumberOfValuesInArray { get; }

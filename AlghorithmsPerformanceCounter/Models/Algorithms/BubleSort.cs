@@ -1,16 +1,28 @@
-﻿using System;
+﻿using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
+using AlghorithmsPerformanceCounter.Services;
+using System;
 using System.Diagnostics;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
-	internal class BubleSort : AbstractSortingAlgorithm
+    internal class BubleSort : AbstractSortingAlgorithm
 	{
+		private PerformancesCounter performanceCounter;
+
+		public PerformancesCounter PerformanceCounter { get => performanceCounter; }
+
+		public BubleSort()
+		{
+			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
+		}
+
+
 		public override string ToString() { return "Buble Sort"; }
-		public override int[] SortArray(int[] array)
+		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			stopwatch.Start();
+			performanceCounter.Stopwatch.Start();
 			{
 				int n = copyArrayToSort.Length;
 				for (int i = 0; i < n - 1; i++)
@@ -19,7 +31,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 					{
 						if (copyArrayToSort[j] > copyArrayToSort[j + 1])
 						{
-							actionsTaken++;
+							performanceCounter.IncrementActionsTaken(); 
 							int temp = copyArrayToSort[j];
 							copyArrayToSort[j] = copyArrayToSort[j + 1];
 							copyArrayToSort[j + 1] = temp;
@@ -27,8 +39,8 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 					}
 				}
 			}
-			stopwatch.Stop();
-			return copyArrayToSort;
+			performanceCounter.Stopwatch.Stop();
+			return performanceCounter;
 		}
 	}
 }

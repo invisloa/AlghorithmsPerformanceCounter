@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
+using AlghorithmsPerformanceCounter.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,17 +8,26 @@ using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
-	internal class Heapsort : AbstractSortingAlgorithm
+    internal class Heapsort : AbstractSortingAlgorithm
 	{
+		private PerformancesCounter performanceCounter;
+
+		public PerformancesCounter PerformanceCounter { get => performanceCounter; }
+
+		public Heapsort()
+		{
+			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
+		}
+
 		public override string ToString() { return "Heap Sort"; }
-		public override int[] SortArray(int[] array)
+		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			stopwatch.Start();
+			performanceCounter.Stopwatch.Start();
 			Heap_sort(copyArrayToSort);
-			stopwatch.Stop();
-			return copyArrayToSort;
+			performanceCounter.Stopwatch.Stop();
+			return performanceCounter;
 		}
 		public void Heap_sort(int[] arr)
 		{
@@ -38,7 +49,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 
 		public void Heapify(int[] arr, int n, int i)
 		{
-			actionsTaken++;  // every Heapify in a heapsort is a meaningfull action
+			performanceCounter.IncrementActionsTaken();   // every Heapify in a heapsort is a meaningfull action
 			int largest = i; // Initialize largest as root
 			int left = 2 * i + 1;
 			int right = 2 * i + 2;

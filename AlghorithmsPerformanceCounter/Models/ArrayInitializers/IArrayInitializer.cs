@@ -2,7 +2,7 @@
 {
 	public interface IArrayInitializer
 	{
-		public int[] SingleArrayInitializer();
-		public int[][] InitializeMultipleArrays();
+		public int[] SingleArrayInitializer(int numberOfValuesInArray);
+		public int[][] InitializeMultipleArrays(int numberOfArrays,int numberOfValuesInArray);
 	}
 }

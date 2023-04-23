@@ -1,4 +1,5 @@
-﻿using AlghorithmsPerformanceCounter.Models.Algorithms;
+﻿using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
+using AlghorithmsPerformanceCounter.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,17 +9,26 @@ using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
-	internal class MergeSort : AbstractSortingAlgorithm
+    internal class MergeSort : AbstractSortingAlgorithm
 	{
+		private PerformancesCounter performanceCounter;
+
+		public PerformancesCounter PerformanceCounter { get => performanceCounter; }
+
+		public MergeSort()
+		{
+			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
+		}
+
 		public override string ToString() { return "Merge Sort"; }
-		public override int[] SortArray(int[] array)
+		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			stopwatch.Start();
+			PerformanceCounter.Stopwatch.Start();
 			MSort(copyArrayToSort);
-			stopwatch.Stop();
-			return copyArrayToSort;
+			PerformanceCounter.Stopwatch.Stop();
+			return performanceCounter;
 		}
 		void MSort(int[] arr)
 		{
@@ -38,12 +48,12 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			MSort(right);
 
 			Merge(arr, left, right);
-			stopwatch.Stop();
+			PerformanceCounter.Stopwatch.Stop();
 		}
 
 		void Merge(int[] arr, int[] left, int[] right)
 		{
-			actionsTaken++;                        // merge is a meaningfull operation (consulted)
+			PerformanceCounter.IncrementActionsTaken(); // merge is a meaningful operation (consulted)
 
 			int i = 0;
 			int j = 0;
@@ -71,6 +81,5 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 				arr[k++] = right[j++];
 			}
 		}
-
 	}
 }

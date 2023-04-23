@@ -1,33 +1,27 @@
-﻿using AlghorithmsPerformanceCounter.Services;
+﻿using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
+using AlghorithmsPerformanceCounter.Services;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
-	public abstract class AbstractSortingAlgorithm : IAlgorithmPerformanceCounter
+    public abstract class AbstractSortingAlgorithm
 	{
-		protected long actionsTaken = 0;
-		protected Stopwatch stopwatch = new Stopwatch();
-		public long ActionsCounted => actionsTaken;
-		public Stopwatch Stopwatch => stopwatch;
-		public void ResetPerformance()
-		{
-			actionsTaken = 0;
-			stopwatch.Reset();
-		}
 		/// <summary>
 		/// SortArray works on a copy of the provided array, to make all sorting algorithms work on the same arrays
 		/// </summary>
 		/// <param name="array"></param>
 		/// <returns></returns>
-		public abstract int[] SortArray(int[] array);
+		public abstract IAlgorithmPerformanceCounter SortArray(int[] array);
 
-		public int[][] SortMultipleArrays(int[][] array)
+		public ObservableCollection<IAlgorithmPerformanceCounter> SortMultipleArrays(int[][] array)
 		{
+			ObservableCollection< IAlgorithmPerformanceCounter> listOffScores = new ObservableCollection<IAlgorithmPerformanceCounter>();
 			foreach (int[] arrayToSort in array)
 			{
-				SortArray(arrayToSort);
+				listOffScores.Add(SortArray(arrayToSort));
 			}
-			return array;
+			return listOffScores;
 		}
 		public abstract override string ToString();
 	}

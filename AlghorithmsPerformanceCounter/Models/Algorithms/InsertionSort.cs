@@ -1,4 +1,5 @@
-﻿using AlghorithmsPerformanceCounter.Models.Algorithms;
+﻿using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
+using AlghorithmsPerformanceCounter.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,16 +9,25 @@ using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
-	internal class InsertionSort : AbstractSortingAlgorithm
+    internal class InsertionSort : AbstractSortingAlgorithm
 	{
-		public override int[] SortArray(int[] array)
+		private PerformancesCounter performanceCounter;
+
+		public PerformancesCounter PerformanceCounter { get => performanceCounter; }
+
+		public InsertionSort()
+		{
+			performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
+		}
+
+		public override IAlgorithmPerformanceCounter SortArray(int[] array)
 		{
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			stopwatch.Start();
+			performanceCounter.Stopwatch.Start();
 			InsSort(copyArrayToSort);
-			stopwatch.Stop();
-			return copyArrayToSort;
+			performanceCounter.Stopwatch.Stop();
+			return performanceCounter;
 		}
 		public override string ToString() { return "Insertion Sort"; }
 		public void InsSort(int[] arr)
@@ -25,7 +35,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			int n = arr.Length;
 			for (int i = 1; i < n; ++i)
 			{
-				actionsTaken++;
+				performanceCounter.IncrementActionsTaken(); 
 				int key = arr[i];
 				int j = i - 1;
 

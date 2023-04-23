@@ -1,13 +1,15 @@
 ﻿using AlghorithmsPerformanceCounter.Models.Algorithms;
+using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
 using AlghorithmsPerformanceCounter.Models.ArrayInitializers;
+using System;
 using System.Collections.Generic;
 
 namespace AlghorithmsPerformanceCounter.Services
 {
-	public static class Factory
+    public static class Factory
 	{
 		// List of sorting algorithms to be used in calculations
-		public static List<IAlgorithmPerformanceCounter> AllSortingAlgorithmsList = new List<IAlgorithmPerformanceCounter>()
+		public static List<AbstractSortingAlgorithm> AllSortingAlgorithmsList = new List<AbstractSortingAlgorithm>()
 		{
 			CreateMergeSorter,
 			CreateQuicksort,
@@ -22,17 +24,21 @@ namespace AlghorithmsPerformanceCounter.Services
 
 		//Creators for all available algorithms
 		#region Sorting algorithms
-		public static IAlgorithmPerformanceCounter CreateQuicksort => new Quicksort();
-		public static IAlgorithmPerformanceCounter CreateBubleSorter => new BubleSort();
-		public static IAlgorithmPerformanceCounter CreateMergeSorter => new MergeSort();
-		public static IAlgorithmPerformanceCounter CreateInsertionSorter => new InsertionSort();
-		public static IAlgorithmPerformanceCounter CreateHeapSorter => new Heapsort();
-		public static IAlgorithmPerformanceCounter CreateLinqSort => new LinqSort();
+		public static AbstractSortingAlgorithm CreateQuicksort => new Quicksort();
+		public static AbstractSortingAlgorithm CreateBubleSorter => new BubleSort();
+		public static AbstractSortingAlgorithm CreateMergeSorter => new MergeSort();
+		public static AbstractSortingAlgorithm CreateInsertionSorter => new InsertionSort();
+		public static AbstractSortingAlgorithm CreateHeapSorter => new Heapsort();
+		public static AbstractSortingAlgorithm CreateLinqSort => new LinqSort();
 
 
 		#endregion
 
 		public static IArraySorterPerformanceCounter CreateMultiAlgorithmsSorter => new ArraySorterPerformanceCounter(AllSortingAlgorithmsList);
-//		public static ISortAlgorithmsScores CreateSortScoresBeforeWrite => new AlgorithmsScoresSorter();
+
+		public static PerformancesCounter CreatePerformanceCounter(string algorithmName)
+		{
+			return new PerformancesCounter(algorithmName);
+		}
 	}
 }

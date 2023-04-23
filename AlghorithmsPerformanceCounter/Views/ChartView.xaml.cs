@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlghorithmsPerformanceCounter.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,17 +21,19 @@ namespace AlghorithmsPerformanceCounter
 	/// </summary>
 	public partial class ChartView : UserControl
 	{
-		public event EventHandler NavigateBackToMainView;
-
-		public ChartView()
+		public ChartView(ChartViewModel chartViewModel)
 		{
 			InitializeComponent();
+
+			// Set the DataContext to the passed-in ChartViewModel
+			DataContext = chartViewModel;
 		}
+
+		public event EventHandler NavigateBackToMainView;
 
 		private void BackToMainViewButton_Click(object sender, RoutedEventArgs e)
 		{
 			NavigateBackToMainView?.Invoke(this, EventArgs.Empty);
-
 		}
 	}
 }

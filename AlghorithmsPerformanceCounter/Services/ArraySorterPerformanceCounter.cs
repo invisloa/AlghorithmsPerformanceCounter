@@ -16,24 +16,23 @@ namespace AlghorithmsPerformanceCounter.Services
 		public int TotalNumberOfArraysToSort => numberOfArrays;
 		public int TotalNumberOfValuesInArray => numberOfValuesInArray;
 
-		public ArraySorterPerformanceCounter(List<IAlgorithmPerformanceCounter> sortingAlgorithmsList)
+		public ArraySorterPerformanceCounter(List<AbstractSortingAlgorithm> sortingAlgorithmsList)
 		{
 			this.sortingAlgorithmsList = sortingAlgorithmsList;
 
 		}
-		List<IAlgorithmPerformanceCounter> sortingAlgorithmsList;
-		public List<IAlgorithmPerformanceCounter> AllUsedAlgoritms => sortingAlgorithmsList;
+		List<AbstractSortingAlgorithm> sortingAlgorithmsList;
+		public List<AbstractSortingAlgorithm> AllUsedAlgoritms => sortingAlgorithmsList;
 
 
 		public void SortMultipleArrays(int[][] arraysToSort)
 		{
 			numberOfArrays = arraysToSort.Length;
 			numberOfValuesInArray = arraysToSort[0].Length;
-			foreach (IAlgorithmPerformanceCounter item in sortingAlgorithmsList)
+			foreach (AbstractSortingAlgorithm item in sortingAlgorithmsList)
 			{
 				foreach (int[] array in arraysToSort)
 				{
-					item.ResetPerformance();
 					item.SortArray(array);
 				}
 			}
