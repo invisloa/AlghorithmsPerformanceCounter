@@ -20,10 +20,8 @@ namespace AlghorithmsPerformanceCounter
 		}
 		private void MainView_NavigateToChartView(object sender, EventArgs e)
 		{
-			var mainWindowViewModel = DataContext as MainViewModel;                              // XXXXXXXXXXXXXXXXXXXXXXXXXXXXX ERROR
-			var chartViewModel = new ChartViewModel(mainWindowViewModel);
-
-			var chartView = new ChartView(chartViewModel);
+			var chartView = sender as ChartView;
+			var chartViewModel = chartView.DataContext as ChartViewModel;
 			chartView.NavigateBackToMainView += ChartView_NavigateBackToMainView;
 			MainContentControl.Content = chartView;
 		}
