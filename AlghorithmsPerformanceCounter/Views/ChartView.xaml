@@ -7,9 +7,21 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <!-- Add your chart controls and other elements here -->
-        <TextBlock Text="Algorithms Performance Charts" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10"/>
+        <StackPanel>
+        <DataGrid Name="ArraySizeTable" >
+            <!-- Add columns to the DataGrid -->
+            <DataGrid.Columns>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Name="PerformancesTable" >
+            <!-- Add columns to the DataGrid -->
+            <DataGrid.Columns>
+            </DataGrid.Columns>
+        </DataGrid>
+        </StackPanel>
+        <TextBlock Text="Algorithms Performance Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
 
-        <Button x:Name="BackToMainViewButton" Content="Back to Main View" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10" Click="BackToMainViewButton_Click"/>
+        <Button x:Name="BackToMainViewButton" Content="Back to Main View" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10" Click="BackToMainViewButton_Click"/>
+
     </Grid>
 </UserControl>

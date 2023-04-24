@@ -22,7 +22,6 @@ namespace AlghorithmsPerformanceCounter.Services
 		public AllAlgorithmsPerformance(List<AbstractSortingAlgorithm> sortingAlgorithmsList)
 		{
 			this.sortingAlgorithmsList = sortingAlgorithmsList;
-
 		}
 		List<AbstractSortingAlgorithm> sortingAlgorithmsList;
 		public List<AbstractSortingAlgorithm> AllUsedAlgoritms => sortingAlgorithmsList;

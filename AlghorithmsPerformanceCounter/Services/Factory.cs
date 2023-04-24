@@ -17,7 +17,6 @@ namespace AlghorithmsPerformanceCounter.Services
 			CreateInsertionSorter,
 			CreateHeapSorter,
 			CreateLinqSort
-
 		};
 		public static IArrayInitializer CreateArrayInitializer => new ArrayInitializer();
 
@@ -31,12 +30,10 @@ namespace AlghorithmsPerformanceCounter.Services
 		public static AbstractSortingAlgorithm CreateHeapSorter => new Heapsort();
 		public static AbstractSortingAlgorithm CreateLinqSort => new LinqSort();
 
-
 		#endregion
 
-		public static IAllAlgorithmsPerformanceCounter CreateMultiAlgorithmsSorter => new AllAlgorithmsPerformance(AllSortingAlgorithmsList);
-
-		public static PerformancesCounter CreatePerformanceCounter(string algorithmName)
+		public static IAllAlgorithmsPerformanceCounter CreateAllAlgorithmsSorter => new AllAlgorithmsPerformance(AllSortingAlgorithmsList);
+		public static IAlgorithmPerformanceCounter CreatePerformanceCounter(string algorithmName)
 		{
 			return new PerformancesCounter(algorithmName);
 		}

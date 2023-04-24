@@ -14,14 +14,17 @@ namespace AlghorithmsPerformanceCounter.ViewModels
     public class ChartViewModel
     {
 		private MainViewModel _mainWindowViewModel;
-		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter { get => Factory.CreateMultiAlgorithmsSorter; }
-		ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>> sortingPerformance;
+		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter  => Factory.CreateAllAlgorithmsSorter;
+		public ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>> SortingPerformance { get; }
+		public int[][] MultipleArrays;
+
+
 
 		public ChartViewModel(MainViewModel mainWindowViewModel)
 		{
 			_mainWindowViewModel = mainWindowViewModel;
-
-			sortingPerformance = multiAlgorithmsSorter.SortMultipleArrays(_mainWindowViewModel.MultipleArrays);
+			MultipleArrays = mainWindowViewModel.MultipleArrays;
+			SortingPerformance = multiAlgorithmsSorter.SortMultipleArrays(_mainWindowViewModel.MultipleArrays);
 		}
 	}
 }

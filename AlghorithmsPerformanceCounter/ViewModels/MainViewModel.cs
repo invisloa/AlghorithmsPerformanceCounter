@@ -13,7 +13,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 	public class MainViewModel : INotifyPropertyChanged
 	{
 		private const int MinValuesPerArray = 1;
-		private const int MaxValuesPerArray = 10000;
+		private const int MaxValuesPerArray = 1000000;
 		private int _numberOfArrays =2;
 		private int _numberOfValuesPerArray =411;
 		IArrayInitializer arrayInitializer = Factory.CreateArrayInitializer;
