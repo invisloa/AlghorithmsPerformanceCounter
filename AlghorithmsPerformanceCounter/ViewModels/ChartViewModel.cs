@@ -42,7 +42,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			{
 				if (_arraySizes.Count == 0)
 				{
-					for (int i = 0; i < MultipleArrays[0].Length - 1; i++)
+					for (int i = 0; i < MultipleArrays.Length; i++)
 					{
 						_arraySizes.Add(MultipleArrays[i].Length.ToString());
 					}

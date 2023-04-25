@@ -30,9 +30,6 @@ namespace AlghorithmsPerformanceCounter
 			PopulateArraysSizesTable();
 			PopulatePerformancesTable();
 
-
-
-
 			chart1.AxisX.Add(new LiveCharts.Wpf.Axis
 			{
 				Title = "Array Sizes",
@@ -46,19 +43,20 @@ namespace AlghorithmsPerformanceCounter
 			chart1.LegendLocation = LiveCharts.LegendLocation.Right;
 			chart1.Series.Clear();
 			SeriesCollection series = new SeriesCollection();
-			var arrays = chartViewModel.ArraySizes;
 
-			for (int i = 0; i < arrays.Count; i++)
+			for (int i = 0; i < chartViewModel.AlgorithmsNames.Count; i++)
 			{
 				List<long> values = new List<long>();
+				for (int j = 0; j < chartViewModel.ArraySizes.Count; j++)
 				{
-					for (int j = 0; j < chartViewModel.AlgorithmsNames.Count; j++)
-					{
-						var data = chartViewModel.SortingPerformanceForAllArraysAndAlgorithms[j][i].Stopwatch.ElapsedTicks;
-						values.Add(data);
-					}
+					var data = chartViewModel.SortingPerformanceForAllArraysAndAlgorithms[i][j].Stopwatch.ElapsedTicks;
+					values.Add(data);
 				}
-				series.Add(new LineSeries() { Title = chartViewModel.ArraySizes.ToString(), Values = new ChartValues<long>(values) });
+				series.Add(new LineSeries()
+				{
+					Title = chartViewModel.AlgorithmsNames[i],
+					Values = new ChartValues<long>(values)
+				});
 			}
 			chart1.Series = series;
 		}
