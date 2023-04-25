@@ -1,5 +1,7 @@
 ﻿using AlghorithmsPerformanceCounter.Models;
 using AlghorithmsPerformanceCounter.ViewModels;
+using LiveCharts;
+using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +29,48 @@ namespace AlghorithmsPerformanceCounter
 			DataContext = chartViewModel;
 			PopulateArraysSizesTable();
 			PopulatePerformancesTable();
+
+
+
+
+			chart1.AxisX.Add(new LiveCharts.Wpf.Axis
+			{
+				Title = "Array Sizes",
+				Labels = chartViewModel.ArraySizes,
+			});
+			chart1.AxisY.Add(new LiveCharts.Wpf.Axis
+			{
+				Title = "Time Complexity",
+				LabelFormatter = value => value.ToString()
+			});
+			chart1.LegendLocation = LiveCharts.LegendLocation.Right;
+			chart1.Series.Clear();
+			SeriesCollection series = new SeriesCollection();
+			var arrays = chartViewModel.ArraySizes;
+
+			for (int i = 0; i < arrays.Count; i++)
+			{
+				List<long> values = new List<long>();
+				{
+					for (int j = 0; j < chartViewModel.AlgorithmsNames.Count; j++)
+					{
+						var data = chartViewModel.SortingPerformanceForAllArraysAndAlgorithms[j][i].Stopwatch.ElapsedTicks;
+						values.Add(data);
+					}
+				}
+				series.Add(new LineSeries() { Title = chartViewModel.ArraySizes.ToString(), Values = new ChartValues<long>(values) });
+			}
+			chart1.Series = series;
 		}
+
+
+
+
+
+
+
+
+
 		public event EventHandler NavigateBackToMainView;
 		private void BackToMainViewButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -57,7 +100,8 @@ namespace AlghorithmsPerformanceCounter
 		{
 			PerformancesTable.CanUserResizeColumns = false;
 			PerformancesTable.CanUserReorderColumns = false;
-			    PerformancesTable.AutoGenerateColumns = false;
+			PerformancesTable.AutoGenerateColumns = false;
+			PerformancesTable.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
 
 			var chartViewModel = DataContext as ChartViewModel;
 			// Get MultipleArrays from the DataContext (ChartViewModel)
@@ -84,14 +128,14 @@ namespace AlghorithmsPerformanceCounter
 		private List<AlgorithmPerformanceRow> GeneratePerformanceRows()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			var sortingPerformance = chartViewModel.SortingPerformance;
+			var sortingPerformance = chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
 			var performanceRows = new List<AlgorithmPerformanceRow>();
 
 			for (int i = 0; i < sortingPerformance.Count; i++)
 			{
 				var row = new AlgorithmPerformanceRow
 				{
-					AlgorithmName = sortingPerformance[i][0].AlgorithmName,
+					AlgorithmName = sortingPerformance[i][0].AlgorithmName,		// second array is for each array scan first is for algorithms used
 					Actions = new List<long>(),
 					Time = new List<double>()
 				};
