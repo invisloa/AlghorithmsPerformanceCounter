@@ -3,13 +3,14 @@ using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
 using AlghorithmsPerformanceCounter.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Services
 {
 	public interface IAllAlgorithmsPerformanceCounter
 	{
 		List<AbstractSortingAlgorithm> AllUsedAlgoritms { get; }
-		ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>> SortMultipleArrays(int[][] arraysToSort);
+		Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortMultipleArrays(int[][] arraysToSort);
 		public int TotalNumberOfArraysToSort { get; }
 		public int TotalNumberOfValuesInArray { get; }
 	}

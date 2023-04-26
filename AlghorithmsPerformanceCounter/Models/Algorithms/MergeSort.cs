@@ -12,14 +12,17 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
     internal class MergeSort : AbstractSortingAlgorithm
 	{
 		public override string ToString() { return "Merge Sort"; }
-		public override IAlgorithmPerformanceCounter SortArray(int[] array)
+		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			performanceCounter.Stopwatch.Start();
-			MSort(copyArrayToSort, performanceCounter);
-			performanceCounter.Stopwatch.Stop();
+			await Task.Run(() =>
+				{
+					performanceCounter.Stopwatch.Start();
+					MSort(copyArrayToSort, performanceCounter);
+					performanceCounter.Stopwatch.Stop();
+				});
 			return performanceCounter;
 		}
 		void MSort(int[] arr, IAlgorithmPerformanceCounter performanceCounter)

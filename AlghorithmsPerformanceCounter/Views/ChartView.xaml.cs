@@ -29,7 +29,12 @@ namespace AlghorithmsPerformanceCounter
 			DataContext = chartViewModel;
 			PopulateArraysSizesTable();
 			PopulatePerformancesTable();
+			PopulateTable(chartViewModel);
 
+		}
+
+		async Task PopulateTable(ChartViewModel chartViewModel)
+		{
 			chart1.AxisX.Add(new LiveCharts.Wpf.Axis
 			{
 				Title = "Array Sizes",
@@ -43,26 +48,25 @@ namespace AlghorithmsPerformanceCounter
 			chart1.LegendLocation = LiveCharts.LegendLocation.Right;
 			chart1.Series.Clear();
 			SeriesCollection series = new SeriesCollection();
+			var algorithmNames = await chartViewModel.GetAlgorithmsNamesAsync();
+			var sortingPerformanceForAllArraysAndAlgorithms = await chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
 
-			for (int i = 0; i < chartViewModel.AlgorithmsNames.Count; i++)
+			for (int i = 0; i < algorithmNames.Count; i++)
 			{
 				List<long> values = new List<long>();
 				for (int j = 0; j < chartViewModel.ArraySizes.Count; j++)
 				{
-					var data = chartViewModel.SortingPerformanceForAllArraysAndAlgorithms[i][j].Stopwatch.ElapsedTicks;
+					var data = sortingPerformanceForAllArraysAndAlgorithms[i][j].Stopwatch.ElapsedTicks;
 					values.Add(data);
 				}
 				series.Add(new LineSeries()
 				{
-					Title = chartViewModel.AlgorithmsNames[i],
+					Title = algorithmNames[i],
 					Values = new ChartValues<long>(values)
 				});
 			}
 			chart1.Series = series;
 		}
-
-
-
 
 
 
@@ -94,7 +98,7 @@ namespace AlghorithmsPerformanceCounter
 				ArraySizeTable.Columns.Add(newColumn);
 			}
 		}
-		void PopulatePerformancesTable()
+		async void PopulatePerformancesTable()
 		{
 			PerformancesTable.CanUserResizeColumns = false;
 			PerformancesTable.CanUserReorderColumns = false;
@@ -121,19 +125,19 @@ namespace AlghorithmsPerformanceCounter
 			}
 
 			// Set the ItemsSource for the PerformancesTable DataGrid
-			PerformancesTable.ItemsSource = GeneratePerformanceRows();
+			PerformancesTable.ItemsSource = await GeneratePerformanceRowsAsync();
 		}
-		private List<AlgorithmPerformanceRow> GeneratePerformanceRows()
+		private async Task<List<AlgorithmPerformanceRow>> GeneratePerformanceRowsAsync()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			var sortingPerformance = chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
+			var sortingPerformance = await chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
 			var performanceRows = new List<AlgorithmPerformanceRow>();
 
 			for (int i = 0; i < sortingPerformance.Count; i++)
 			{
 				var row = new AlgorithmPerformanceRow
 				{
-					AlgorithmName = sortingPerformance[i][0].AlgorithmName,		// second array is for each array scan first is for algorithms used
+					AlgorithmName = sortingPerformance[i][0].AlgorithmName,    // second array is for each array scan first is for algorithms used
 					Actions = new List<long>(),
 					Time = new List<double>()
 				};
@@ -149,6 +153,5 @@ namespace AlghorithmsPerformanceCounter
 
 			return performanceRows;
 		}
-
 	}
 }

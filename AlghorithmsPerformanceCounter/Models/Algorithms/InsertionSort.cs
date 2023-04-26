@@ -11,14 +11,17 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
     internal class InsertionSort : AbstractSortingAlgorithm
 	{
-		public override IAlgorithmPerformanceCounter SortArray(int[] array)
+		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			performanceCounter.Stopwatch.Start();
-			InsSort(copyArrayToSort, performanceCounter);
-			performanceCounter.Stopwatch.Stop();
+			await Task.Run(() =>
+			{
+				performanceCounter.Stopwatch.Start();
+				InsSort(copyArrayToSort, performanceCounter);
+				performanceCounter.Stopwatch.Stop();
+			});
 			return performanceCounter;
 		}
 		public override string ToString() { return "Insertion Sort"; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
-    internal class BubleSort : AbstractSortingAlgorithm
+	internal class BubleSort : AbstractSortingAlgorithm
 	{
 		public override string ToString() { return "Buble Sort"; }
 		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
@@ -14,8 +14,10 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			performanceCounter.Stopwatch.Start();
+
+			await Task.Run(() =>
 			{
+				performanceCounter.Stopwatch.Start();
 				int n = copyArrayToSort.Length;
 				for (int i = 0; i < n - 1; i++)
 				{
@@ -30,8 +32,9 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 						}
 					}
 				}
-			}
-			performanceCounter.Stopwatch.Stop();
+				performanceCounter.Stopwatch.Stop();
+			});
+
 			return performanceCounter;
 		}
 	}

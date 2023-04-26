@@ -12,14 +12,17 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
     public class Quicksort : AbstractSortingAlgorithm
 	{
 		public override string ToString() { return "Quick Sort"; }
-		public override IAlgorithmPerformanceCounter SortArray(int[] array) 
+		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array) 
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			performanceCounter.Stopwatch.Start();
-			QSort(copyArrayToSort, 0, copyArrayToSort.Length - 1, performanceCounter);
-			performanceCounter.Stopwatch.Stop();
+			await Task.Run(() =>
+						{
+							performanceCounter.Stopwatch.Start();
+							QSort(copyArrayToSort, 0, copyArrayToSort.Length - 1, performanceCounter);
+							performanceCounter.Stopwatch.Stop();
+						});
 			return performanceCounter;
 		}
 

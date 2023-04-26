@@ -12,14 +12,17 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
     internal class Heapsort : AbstractSortingAlgorithm
 	{
 		public override string ToString() { return "Heap Sort"; }
-		public override  Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
+		public async override  Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			performanceCounter.Stopwatch.Start();
-			Heap_sort(copyArrayToSort, performanceCounter);
-			performanceCounter.Stopwatch.Stop();
+			await Task.Run(() =>
+			{
+				performanceCounter.Stopwatch.Start();
+				Heap_sort(copyArrayToSort, performanceCounter);
+				performanceCounter.Stopwatch.Stop();
+			});
 			return performanceCounter;
 		}
 		public void Heap_sort(int[] arr, IAlgorithmPerformanceCounter performanceCounter)

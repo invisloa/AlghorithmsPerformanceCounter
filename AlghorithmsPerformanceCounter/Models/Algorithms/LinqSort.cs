@@ -10,15 +10,18 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
     internal class LinqSort : AbstractSortingAlgorithm
 	{
-		public override IAlgorithmPerformanceCounter SortArray(int[] array)
+		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 
 			int[] copyArrayToSort = new int[array.Length];
 			Array.Copy(array, copyArrayToSort, array.Length);
-			performanceCounter.Stopwatch.Start();
-			copyArrayToSort = array.OrderBy(x => x).ToArray();
-			performanceCounter.Stopwatch.Stop();
+			await Task.Run(() =>
+			{
+				performanceCounter.Stopwatch.Start();
+				copyArrayToSort = array.OrderBy(x => x).ToArray();
+				performanceCounter.Stopwatch.Stop();
+			});
 			return performanceCounter;
 		}
 		public override string ToString() { return "Linq Sort"; }
