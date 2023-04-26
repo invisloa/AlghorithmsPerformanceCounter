@@ -2,6 +2,7 @@
 using AlghorithmsPerformanceCounter.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
@@ -12,17 +13,18 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 		/// </summary>
 		/// <param name="array"></param>
 		/// <returns></returns>
-		public abstract IAlgorithmPerformanceCounter SortArray(int[] array);
+		public abstract Task<IAlgorithmPerformanceCounter> SortArray(int[] array);
 
-		public ObservableCollection<IAlgorithmPerformanceCounter> SortMultipleArrays(int[][] array)
+		public async Task<ObservableCollection<IAlgorithmPerformanceCounter>> SortMultipleArrays(int[][] arrays)
 		{
-			ObservableCollection< IAlgorithmPerformanceCounter> listOffScores = new ObservableCollection<IAlgorithmPerformanceCounter>();
-			foreach (int[] arrayToSort in array)
+			ObservableCollection<IAlgorithmPerformanceCounter> listOfCounters = new ObservableCollection<IAlgorithmPerformanceCounter>();
+			foreach (int[] arrayToSort in arrays)
 			{
-				listOffScores.Add(SortArray(arrayToSort));
+				listOfCounters.Add(await SortArray(arrayToSort));
 			}
-			return listOffScores;
+			return listOfCounters;
 		}
+
 		public abstract override string ToString();
 	}
 }

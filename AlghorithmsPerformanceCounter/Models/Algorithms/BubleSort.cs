@@ -2,13 +2,14 @@
 using AlghorithmsPerformanceCounter.Services;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
     internal class BubleSort : AbstractSortingAlgorithm
 	{
 		public override string ToString() { return "Buble Sort"; }
-		public override IAlgorithmPerformanceCounter SortArray(int[] array)
+		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
 			int[] copyArrayToSort = new int[array.Length];
@@ -22,7 +23,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 					{
 						if (copyArrayToSort[j] > copyArrayToSort[j + 1])
 						{
-							performanceCounter.IncrementActionsTaken(); 
+							performanceCounter.IncrementActionsTaken();
 							int temp = copyArrayToSort[j];
 							copyArrayToSort[j] = copyArrayToSort[j + 1];
 							copyArrayToSort[j + 1] = temp;
