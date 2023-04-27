@@ -81,8 +81,6 @@ namespace AlghorithmsPerformanceCounter
 
 		void PopulateArraysSizesTable()
 		{
-			ArraySizeTable.CanUserResizeColumns = false;
-			ArraySizeTable.CanUserReorderColumns = false;
 			var chartViewModel = DataContext as ChartViewModel;
 			// Get MultipleArrays from the DataContext (ChartViewModel)
 			int[][] multipleArrays = chartViewModel.MultipleArrays;
@@ -100,11 +98,6 @@ namespace AlghorithmsPerformanceCounter
 		}
 		async void PopulatePerformancesTable()
 		{
-			PerformancesTable.CanUserResizeColumns = false;
-			PerformancesTable.CanUserReorderColumns = false;
-			PerformancesTable.AutoGenerateColumns = false;
-			PerformancesTable.HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden;
-
 			var chartViewModel = DataContext as ChartViewModel;
 			// Get MultipleArrays from the DataContext (ChartViewModel)
 			int[][] multipleArrays = chartViewModel.MultipleArrays;
