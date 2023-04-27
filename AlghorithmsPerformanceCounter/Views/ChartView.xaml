@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:AlghorithmsPerformanceCounter"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             DataContext="{Binding RelativeSource={RelativeSource Self}, Path=DataContext}">
+             d:DesignHeight="750" d:DesignWidth="800"
+             >
     <StackPanel>
         <StackPanel>
         <DataGrid Name="ArraySizeTable" >
@@ -20,6 +20,8 @@
             <DataGrid.Columns>
             </DataGrid.Columns>
         </DataGrid>
+
+        <!-- Charts -->
         </StackPanel>
         <lvc:CartesianChart MinHeight="200" x:Name="chart1">
 
