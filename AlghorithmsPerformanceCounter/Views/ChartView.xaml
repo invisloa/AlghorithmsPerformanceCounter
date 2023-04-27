@@ -10,16 +10,19 @@
              >
     <StackPanel>
         <StackPanel>
-        <DataGrid Name="ArraySizeTable" >
-            <!-- Add columns to the DataGrid -->
-            <DataGrid.Columns>
-            </DataGrid.Columns>
-        </DataGrid>
-        <DataGrid Name="PerformancesTable" >
-            <!-- Add columns to the DataGrid -->
-            <DataGrid.Columns>
-            </DataGrid.Columns>
-        </DataGrid>
+            <!-- First ArraySizes DataGrid -->
+
+            <DataGrid Name="ArraySizeTable" >
+                <DataGrid.Columns>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Performances Table DataGrid -->
+
+            <DataGrid Name="PerformancesTable" >
+                <DataGrid.Columns>
+                </DataGrid.Columns>
+            </DataGrid>
 
         <!-- Charts -->
         </StackPanel>
