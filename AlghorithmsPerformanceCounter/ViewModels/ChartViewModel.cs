@@ -36,8 +36,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			return algorithmsNames;
 		}
 		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter => Factory.CreateAllAlgorithmsSorter;
-
-
 		public ChartViewModel(MainViewModel mainWindowViewModel)
 		{
 			this.mainWindowViewModel = mainWindowViewModel;
