@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
 using LiveCharts;
+using AlghorithmsPerformanceCounter.Models;
 
 namespace AlghorithmsPerformanceCounter.ViewModels
 {
@@ -19,6 +20,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		public Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortingPerformanceForAllArraysAndAlgorithms { get; } // second array is for each array scan first is for algorithms used
 		public int[][] ArraySizes;
 		ObservableCollection<string> _algorithmsNames = new ObservableCollection<string>();
+		public  Task<List<AlgorithmPerformanceRow>> AlgorithmPerformanceRows { get => GeneratePerformanceRowsAsync(); }
 		public async Task<ObservableCollection<string>> GetAlgorithmsNamesAsync()
 		{
 			if (_algorithmsNames.Count == 0)
@@ -37,5 +39,30 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			ArraySizes = mainWindowViewModel.MultipleArrays;
 			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortMultipleArrays(_mainWindowViewModel.MultipleArrays);
 		}
+		private async Task<List<AlgorithmPerformanceRow>> GeneratePerformanceRowsAsync()
+		{
+			var sortingPerformance = await SortingPerformanceForAllArraysAndAlgorithms;
+			var performanceRows = new List<AlgorithmPerformanceRow>();
+
+			for (int i = 0; i < sortingPerformance.Count; i++)
+			{
+				var row = new AlgorithmPerformanceRow
+				{
+					AlgorithmName = sortingPerformance[i][0].AlgorithmName,    // second array is for each array scan first is for algorithms used
+					Actions = new List<long>(),
+					Time = new List<double>()
+				};
+
+				for (int j = 0; j < sortingPerformance[i].Count; j++)
+				{
+					row.Actions.Add(sortingPerformance[i][j].ActionsTaken);
+					row.Time.Add(sortingPerformance[i][j].Stopwatch.ElapsedTicks);
+				}
+
+				performanceRows.Add(row);
+			}
+			return performanceRows;
+		}
+
 	}
 }

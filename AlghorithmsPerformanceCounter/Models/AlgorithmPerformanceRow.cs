@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models
 {
-	internal class AlgorithmPerformanceRow
+	public class AlgorithmPerformanceRow
 	{
 		public string AlgorithmName { get; set; }
 		public List<long> Actions { get; set; }

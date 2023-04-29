@@ -112,32 +112,7 @@ namespace AlghorithmsPerformanceCounter
 			}
 
 			// Set the ItemsSource for the PerformancesTable DataGrid
-			PerformancesTable.ItemsSource = await GeneratePerformanceRowsAsync();
-		}
-		private async Task<List<AlgorithmPerformanceRow>> GeneratePerformanceRowsAsync()
-		{
-			var chartViewModel = DataContext as ChartViewModel;
-			var sortingPerformance = await chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
-			var performanceRows = new List<AlgorithmPerformanceRow>();
-
-			for (int i = 0; i < sortingPerformance.Count; i++)
-			{
-				var row = new AlgorithmPerformanceRow
-				{
-					AlgorithmName = sortingPerformance[i][0].AlgorithmName,    // second array is for each array scan first is for algorithms used
-					Actions = new List<long>(),
-					Time = new List<double>()
-				};
-
-				for (int j = 0; j < sortingPerformance[i].Count; j++)
-				{
-					row.Actions.Add(sortingPerformance[i][j].ActionsTaken);
-					row.Time.Add(sortingPerformance[i][j].Stopwatch.ElapsedTicks);
-				}
-
-				performanceRows.Add(row);
-			}
-			return performanceRows;
+			PerformancesTable.ItemsSource = await chartViewModel.AlgorithmPerformanceRows;
 		}
 	}
 }
