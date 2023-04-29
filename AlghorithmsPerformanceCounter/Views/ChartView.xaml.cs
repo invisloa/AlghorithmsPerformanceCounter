@@ -35,10 +35,12 @@ namespace AlghorithmsPerformanceCounter
 
 		async Task PopulateTable(ChartViewModel chartViewModel)
 		{
+			var arraySizesLabels = chartViewModel.ArraySizes.Select(array => array.Length.ToString()).ToList();
+
 			chart1.AxisX.Add(new LiveCharts.Wpf.Axis
 			{
 				Title = "Array Sizes",
-				Labels = chartViewModel.ArraySizes,
+				Labels = arraySizesLabels,
 			});
 			chart1.AxisY.Add(new LiveCharts.Wpf.Axis
 			{
@@ -54,7 +56,7 @@ namespace AlghorithmsPerformanceCounter
 			for (int i = 0; i < algorithmNames.Count; i++)
 			{
 				List<long> values = new List<long>();
-				for (int j = 0; j < chartViewModel.ArraySizes.Count; j++)
+				for (int j = 0; j < arraySizesLabels.Count; j++)
 				{
 					var data = sortingPerformanceForAllArraysAndAlgorithms[i][j].Stopwatch.ElapsedTicks;
 					values.Add(data);
@@ -68,11 +70,6 @@ namespace AlghorithmsPerformanceCounter
 			chart1.Series = series;
 		}
 
-
-
-
-
-
 		public event EventHandler NavigateBackToMainView;
 		private void BackToMainViewButton_Click(object sender, RoutedEventArgs e)
 		{
@@ -82,8 +79,8 @@ namespace AlghorithmsPerformanceCounter
 		void PopulateArraysSizesTable()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			// Get MultipleArrays from the DataContext (ChartViewModel)
-			int[][] multipleArrays = chartViewModel.MultipleArrays;
+			// Get ArraySizes from the DataContext (ChartViewModel)
+			int[][] multipleArrays = chartViewModel.ArraySizes;
 			var firstEmptyColumn = new DataGridTextColumn() { Header = "", Width = 125 };
 			ArraySizeTable.Columns.Add(firstEmptyColumn);
 
@@ -99,8 +96,8 @@ namespace AlghorithmsPerformanceCounter
 		async void PopulatePerformancesTable()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			// Get MultipleArrays from the DataContext (ChartViewModel)
-			int[][] multipleArrays = chartViewModel.MultipleArrays;
+			// Get ArraySizes from the DataContext (ChartViewModel)
+			int[][] multipleArrays = chartViewModel.ArraySizes;
 			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", Width = 125, Binding = new Binding("AlgorithmName") };
 			PerformancesTable.Columns.Add(algorithmsName);
 			for (int arrayIndex = 0; arrayIndex < multipleArrays.Length; arrayIndex++)
@@ -143,7 +140,6 @@ namespace AlghorithmsPerformanceCounter
 
 				performanceRows.Add(row);
 			}
-
 			return performanceRows;
 		}
 	}

@@ -17,11 +17,8 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		private MainViewModel _mainWindowViewModel;
 		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter  => Factory.CreateAllAlgorithmsSorter;
 		public Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortingPerformanceForAllArraysAndAlgorithms { get; } // second array is for each array scan first is for algorithms used
-		public int[][] MultipleArrays;
+		public int[][] ArraySizes;
 		ObservableCollection<string> _algorithmsNames = new ObservableCollection<string>();
-		ObservableCollection<string> _arraySizes = new ObservableCollection<string>();
-		public ChartValues<long> TimeComplexity { get; set; }
-
 		public async Task<ObservableCollection<string>> GetAlgorithmsNamesAsync()
 		{
 			if (_algorithmsNames.Count == 0)
@@ -34,24 +31,10 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			}
 			return _algorithmsNames;
 		}
-		public ObservableCollection<string> ArraySizes
-		{
-			get
-			{
-				if (_arraySizes.Count == 0)
-				{
-					for (int i = 0; i < MultipleArrays.Length; i++)
-					{
-						_arraySizes.Add(MultipleArrays[i].Length.ToString());
-					}
-				}
-				return _arraySizes;
-			}
-		}
 		public ChartViewModel(MainViewModel mainWindowViewModel)
 		{
 			_mainWindowViewModel = mainWindowViewModel;
-			MultipleArrays = mainWindowViewModel.MultipleArrays;
+			ArraySizes = mainWindowViewModel.MultipleArrays;
 			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortMultipleArrays(_mainWindowViewModel.MultipleArrays);
 		}
 	}

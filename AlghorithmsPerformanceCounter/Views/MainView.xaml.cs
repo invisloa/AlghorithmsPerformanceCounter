@@ -35,7 +35,7 @@ namespace AlghorithmsPerformanceCounter
 			var chartView = new ChartView(chartViewModel);
 
 			// Raise the NavigateToChartView event with the ChartView as the sender
-			NavigateToChartView?.Invoke(chartView, EventArgs.Empty);							//ERROR!!!
+			NavigateToChartView?.Invoke(chartView, EventArgs.Empty);
 		}
 	}
 }
