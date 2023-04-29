@@ -80,15 +80,14 @@ namespace AlghorithmsPerformanceCounter
 		{
 			var chartViewModel = DataContext as ChartViewModel;
 			// Get ArraySizes from the DataContext (ChartViewModel)
-			int[][] multipleArrays = chartViewModel.ArraySizes;
 			var firstEmptyColumn = new DataGridTextColumn() { Header = "", Width = 125 };
 			ArraySizeTable.Columns.Add(firstEmptyColumn);
 
-			for (int arrayIndex = 0; arrayIndex < multipleArrays.Length; arrayIndex++)
+			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
 			{
 				var newColumn = new DataGridTextColumn();
 				newColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-				newColumn.Header = $"Array size {multipleArrays[arrayIndex].Length}";
+				newColumn.Header = $"Array size {chartViewModel.ArraySizes[arrayIndex].Length}";
 				// Add the column to the DataGrid
 				ArraySizeTable.Columns.Add(newColumn);
 			}
@@ -96,11 +95,9 @@ namespace AlghorithmsPerformanceCounter
 		async void PopulatePerformancesTable()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			// Get ArraySizes from the DataContext (ChartViewModel)
-			int[][] multipleArrays = chartViewModel.ArraySizes;
 			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", Width = 125, Binding = new Binding("AlgorithmName") };
 			PerformancesTable.Columns.Add(algorithmsName);
-			for (int arrayIndex = 0; arrayIndex < multipleArrays.Length; arrayIndex++)
+			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
 			{
 				var actionsColumn = new DataGridTextColumn() { Binding = new Binding($"Actions[{arrayIndex}]") };
 				actionsColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
