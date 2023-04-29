@@ -15,29 +15,34 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 {
     public class ChartViewModel
     {
-		private MainViewModel _mainWindowViewModel;
-		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter  => Factory.CreateAllAlgorithmsSorter;
+		private int[][] arraySizes;
+		public int[][] ArraySizes { get => arraySizes; set => arraySizes = value; }
+
+
+		private MainViewModel mainWindowViewModel;
 		public Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortingPerformanceForAllArraysAndAlgorithms { get; } // second array is for each array scan first is for algorithms used
-		public int[][] ArraySizes;
-		ObservableCollection<string> _algorithmsNames = new ObservableCollection<string>();
+		ObservableCollection<string> algorithmsNames = new ObservableCollection<string>();
 		public  Task<List<AlgorithmPerformanceRow>> AlgorithmPerformanceRows { get => GeneratePerformanceRowsAsync(); }
 		public async Task<ObservableCollection<string>> GetAlgorithmsNamesAsync()
 		{
-			if (_algorithmsNames.Count == 0)
+			if (algorithmsNames.Count == 0)
 			{
 				var sortingPerformanceForAllArraysAndAlgorithms = await SortingPerformanceForAllArraysAndAlgorithms;
 				foreach (var collection in sortingPerformanceForAllArraysAndAlgorithms)
 				{
-					_algorithmsNames.Add(collection[0].AlgorithmName);
+					algorithmsNames.Add(collection[0].AlgorithmName);
 				}
 			}
-			return _algorithmsNames;
+			return algorithmsNames;
 		}
+		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter => Factory.CreateAllAlgorithmsSorter;
+
+
 		public ChartViewModel(MainViewModel mainWindowViewModel)
 		{
-			_mainWindowViewModel = mainWindowViewModel;
+			this.mainWindowViewModel = mainWindowViewModel;
 			ArraySizes = mainWindowViewModel.MultipleArrays;
-			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortMultipleArrays(_mainWindowViewModel.MultipleArrays);
+			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortMultipleArrays(this.mainWindowViewModel.MultipleArrays);
 		}
 		private async Task<List<AlgorithmPerformanceRow>> GeneratePerformanceRowsAsync()
 		{
