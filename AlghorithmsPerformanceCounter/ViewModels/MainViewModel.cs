@@ -30,8 +30,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 										  .ToList();
 			}
 		}
-
-
 		private const int MinValuesPerArray = 1;
 		private const int MaxValuesPerArray = 1000000;
 		private int _numberOfArrays =2;
