@@ -9,8 +9,7 @@
 
     <Grid>
         <ListBox ItemsSource="{Binding AlgorithmSelections}"
-         SelectionMode="Multiple"
-         Background="{x:Null}">
+         SelectionMode="Multiple" HorizontalAlignment="Center" BorderThickness="0">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel />
