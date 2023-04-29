@@ -29,14 +29,54 @@ namespace AlghorithmsPerformanceCounter
 			DataContext = chartViewModel;
 			PopulateArraysSizesTable();
 			PopulatePerformancesTable();
-			PopulateTable(chartViewModel);
-
+			PopulateCharts();
+		}
+		void PopulateArraysSizesTable()
+		{
+			var chartViewModel = DataContext as ChartViewModel;
+			var firstEmptyColumn = new DataGridTextColumn() { Header = "", Width = 125 };
+			ArraySizeTable.Columns.Add(firstEmptyColumn);
+			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
+			{
+				var newColumn = new DataGridTextColumn();
+				newColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+				newColumn.Header = $"Array size {chartViewModel.ArraySizes[arrayIndex].Length}";
+				// Add the column to the DataGrid
+				ArraySizeTable.Columns.Add(newColumn);
+			}
 		}
 
-		async Task PopulateTable(ChartViewModel chartViewModel)
+		public event EventHandler NavigateBackToMainView;
+		private void BackToMainViewButton_Click(object sender, RoutedEventArgs e)
 		{
-			var arraySizesLabels = chartViewModel.ArraySizes.Select(array => array.Length.ToString()).ToList();
+			NavigateBackToMainView?.Invoke(this, EventArgs.Empty);
+		}
 
+		async void PopulatePerformancesTable()
+		{
+			var chartViewModel = DataContext as ChartViewModel;
+			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", Width = 125, Binding = new Binding("AlgorithmName") };
+			PerformancesTable.Columns.Add(algorithmsName);
+			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
+			{
+				var actionsColumn = new DataGridTextColumn() { Binding = new Binding($"Actions[{arrayIndex}]") };
+				actionsColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+				actionsColumn.Header = $"Actions";
+				// Add the column to the DataGrid
+				PerformancesTable.Columns.Add(actionsColumn);
+				var timeColumn = new DataGridTextColumn() { Binding = new Binding($"Time[{arrayIndex}]") };
+				timeColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+				timeColumn.Header = $"Time (ms)";
+				// Add the column to the DataGrid
+				PerformancesTable.Columns.Add(timeColumn);
+			}
+			// Set the ItemsSource for the PerformancesTable DataGrid
+			PerformancesTable.ItemsSource = await chartViewModel.AlgorithmPerformanceRows;
+		}
+		async Task PopulateCharts()
+		{
+			var chartViewModel = DataContext as ChartViewModel;
+			var arraySizesLabels = chartViewModel.ArraySizes.Select(array => array.Length.ToString()).ToList();
 			chart1.AxisX.Add(new LiveCharts.Wpf.Axis
 			{
 				Title = "Array Sizes",
@@ -68,51 +108,6 @@ namespace AlghorithmsPerformanceCounter
 				});
 			}
 			chart1.Series = series;
-		}
-
-		public event EventHandler NavigateBackToMainView;
-		private void BackToMainViewButton_Click(object sender, RoutedEventArgs e)
-		{
-			NavigateBackToMainView?.Invoke(this, EventArgs.Empty);
-		}
-
-		void PopulateArraysSizesTable()
-		{
-			var chartViewModel = DataContext as ChartViewModel;
-			// Get ArraySizes from the DataContext (ChartViewModel)
-			var firstEmptyColumn = new DataGridTextColumn() { Header = "", Width = 125 };
-			ArraySizeTable.Columns.Add(firstEmptyColumn);
-
-			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
-			{
-				var newColumn = new DataGridTextColumn();
-				newColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-				newColumn.Header = $"Array size {chartViewModel.ArraySizes[arrayIndex].Length}";
-				// Add the column to the DataGrid
-				ArraySizeTable.Columns.Add(newColumn);
-			}
-		}
-		async void PopulatePerformancesTable()
-		{
-			var chartViewModel = DataContext as ChartViewModel;
-			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", Width = 125, Binding = new Binding("AlgorithmName") };
-			PerformancesTable.Columns.Add(algorithmsName);
-			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
-			{
-				var actionsColumn = new DataGridTextColumn() { Binding = new Binding($"Actions[{arrayIndex}]") };
-				actionsColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-				actionsColumn.Header = $"Actions";
-				// Add the column to the DataGrid
-				PerformancesTable.Columns.Add(actionsColumn);
-				var timeColumn = new DataGridTextColumn() { Binding = new Binding($"Time[{arrayIndex}]") };
-				timeColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-				timeColumn.Header = $"Time (ms)";
-				// Add the column to the DataGrid
-				PerformancesTable.Columns.Add(timeColumn);
-			}
-
-			// Set the ItemsSource for the PerformancesTable DataGrid
-			PerformancesTable.ItemsSource = await chartViewModel.AlgorithmPerformanceRows;
 		}
 	}
 }
