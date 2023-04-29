@@ -12,6 +12,8 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
     public class Quicksort : AbstractSortingAlgorithm
 	{
 		public override string ToString() { return "Quick Sort"; }
+		public override string Name => this.ToString();
+
 		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array) 
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());

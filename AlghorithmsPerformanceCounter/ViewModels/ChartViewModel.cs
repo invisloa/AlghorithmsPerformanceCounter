@@ -44,7 +44,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				return algorithmsNames;
 			}
 		}
-		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter => Factory.CreateAllAlgorithmsSorter;
+		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter => Factory.CreateCustomAlgorithmsSorter(mainWindowViewModel.AlgorithmSelections);
 		public ChartViewModel(MainViewModel mainWindowViewModel)
 		{
 			this.mainWindowViewModel = mainWindowViewModel;

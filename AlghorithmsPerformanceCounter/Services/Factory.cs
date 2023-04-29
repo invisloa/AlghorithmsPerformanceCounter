@@ -4,6 +4,7 @@ using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
 using AlghorithmsPerformanceCounter.Models.ArrayInitializers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AlghorithmsPerformanceCounter.Services
 {
@@ -34,6 +35,11 @@ namespace AlghorithmsPerformanceCounter.Services
 		#endregion
 
 		public static IAllAlgorithmsPerformanceCounter CreateAllAlgorithmsSorter => new AllAlgorithmsPerformance(AllSortingAlgorithmsList);
+		public static IAllAlgorithmsPerformanceCounter CreateCustomAlgorithmsSorter(List<AlgorithmSelection> algorithmSelections)
+		{
+			var selectedAlgorithms = algorithmSelections.Where(x => x.IsSelected).Select(x => x.Algorithm).ToList();
+			return new AllAlgorithmsPerformance(selectedAlgorithms);
+		}
 		public static IAlgorithmPerformanceCounter CreatePerformanceCounter(string algorithmName)
 		{
 			return new PerformancesCounter(algorithmName);

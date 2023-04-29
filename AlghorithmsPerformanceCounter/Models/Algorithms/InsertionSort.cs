@@ -11,6 +11,9 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
     internal class InsertionSort : AbstractSortingAlgorithm
 	{
+		public override string ToString() { return "Insertion Sort"; }
+		public override string Name => this.ToString();
+
 		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
@@ -24,7 +27,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			});
 			return performanceCounter;
 		}
-		public override string ToString() { return "Insertion Sort"; }
+
 		public void InsSort(int[] arr, IAlgorithmPerformanceCounter performanceCounter)
 		{
 			int n = arr.Length;

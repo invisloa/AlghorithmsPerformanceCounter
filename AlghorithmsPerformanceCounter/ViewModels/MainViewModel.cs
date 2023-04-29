@@ -1,4 +1,6 @@
-﻿using AlghorithmsPerformanceCounter.Models.ArrayInitializers;
+﻿using AlghorithmsPerformanceCounter.Models;
+using AlghorithmsPerformanceCounter.Models.Algorithms;
+using AlghorithmsPerformanceCounter.Models.ArrayInitializers;
 using AlghorithmsPerformanceCounter.Services;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,24 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 {
 	public class MainViewModel : INotifyPropertyChanged
 	{
+		public  List<AbstractSortingAlgorithm> AllSortingAlgorithmsList => Factory.AllSortingAlgorithmsList;
+		public List<AlgorithmSelection> AlgorithmSelections { get; }
+
+		public MainViewModel()
+		{
+			AlgorithmSelections = Factory.AllSortingAlgorithmsList.Select(alg => new AlgorithmSelection { Algorithm = alg, IsSelected = true }).ToList();
+		}
+		public List<AbstractSortingAlgorithm> SelectedAlgorithms
+		{
+			get
+			{
+				return AlgorithmSelections.Where(x => x.IsSelected)
+										  .Select(x => x.Algorithm)
+										  .ToList();
+			}
+		}
+
+
 		private const int MinValuesPerArray = 1;
 		private const int MaxValuesPerArray = 1000000;
 		private int _numberOfArrays =2;

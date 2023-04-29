@@ -9,6 +9,8 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 	internal class BubleSort : AbstractSortingAlgorithm
 	{
 		public override string ToString() { return "Buble Sort"; }
+		public override string Name => this.ToString();
+
 		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());

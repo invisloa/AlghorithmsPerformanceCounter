@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models.Algorithms
 {
-    public abstract class AbstractSortingAlgorithm
+	public abstract class AbstractSortingAlgorithm
 	{
 		/// <summary>
 		/// SortArray works on a copy of the provided array, to make all sorting algorithms work on the same arrays
@@ -14,6 +14,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 		/// <param name="array"></param>
 		/// <returns></returns>
 		public abstract Task<IAlgorithmPerformanceCounter> SortArray(int[] array);
+		public abstract string Name { get; }
 
 		public async Task<ObservableCollection<IAlgorithmPerformanceCounter>> SortMultipleArrays(int[][] arrays)
 		{

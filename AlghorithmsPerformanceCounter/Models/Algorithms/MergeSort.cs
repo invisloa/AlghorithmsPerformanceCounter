@@ -12,6 +12,8 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
     internal class MergeSort : AbstractSortingAlgorithm
 	{
 		public override string ToString() { return "Merge Sort"; }
+		public override string Name => this.ToString();
+
 		public async override Task<IAlgorithmPerformanceCounter> SortArray(int[] array)
 		{
 			IAlgorithmPerformanceCounter performanceCounter = Factory.CreatePerformanceCounter(this.ToString());
