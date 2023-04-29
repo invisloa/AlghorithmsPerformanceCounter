@@ -18,7 +18,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		private int[][] arraySizes;
 		public int[][] ArraySizes { get => arraySizes; set => arraySizes = value; }
 
-
 		private MainViewModel mainWindowViewModel;
 		public Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortingPerformanceForAllArraysAndAlgorithms { get; } // second array is for each array scan first is for algorithms used
 		public  Task<List<IAlgorithmPerformanceRow>> AlgorithmPerformanceRows { get => GeneratePerformanceRowsAsync(); }
