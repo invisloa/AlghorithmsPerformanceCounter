@@ -15,7 +15,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		private const int MinValuesPerArray = 1;
 		private const int MaxValuesPerArray = 1000000;
 		private int _numberOfArrays =2;
-		private int _numberOfValuesPerArray =411;
+		private int _numberOfValuesPerArray = 1000;
 		IArrayInitializer arrayInitializer = Factory.CreateArrayInitializer;
 		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_numberOfArrays, _numberOfValuesPerArray); }
 		public int NumberOfArrays
