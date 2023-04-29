@@ -28,8 +28,8 @@ namespace AlghorithmsPerformanceCounter
 			// Set the DataContext to the passed-in ChartViewModel
 			DataContext = chartViewModel;
 			PopulateArraysSizesTable();
-			PopulatePerformancesTable();
-			PopulateCharts();
+			_ = PopulatePerformancesTableAsync();
+			_ = PopulateChartsAsync();
 		}
 		void PopulateArraysSizesTable()
 		{
@@ -52,7 +52,7 @@ namespace AlghorithmsPerformanceCounter
 			NavigateBackToMainView?.Invoke(this, EventArgs.Empty);
 		}
 
-		async void PopulatePerformancesTable()
+		async Task PopulatePerformancesTableAsync()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
 			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", Width = 125, Binding = new Binding("AlgorithmName") };
@@ -73,7 +73,7 @@ namespace AlghorithmsPerformanceCounter
 			// Set the ItemsSource for the PerformancesTable DataGrid
 			PerformancesTable.ItemsSource = await chartViewModel.AlgorithmPerformanceRows;
 		}
-		async Task PopulateCharts()
+		async Task PopulateChartsAsync()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
 			var arraySizesLabels = chartViewModel.ArraySizes.Select(array => array.Length.ToString()).ToList();
@@ -90,7 +90,7 @@ namespace AlghorithmsPerformanceCounter
 			chart1.LegendLocation = LiveCharts.LegendLocation.Right;
 			chart1.Series.Clear();
 			SeriesCollection series = new SeriesCollection();
-			var algorithmNames = await chartViewModel.GetAlgorithmsNamesAsync();
+			var algorithmNames = chartViewModel.AlgorithmsNames;
 			var sortingPerformanceForAllArraysAndAlgorithms = await chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
 
 			for (int i = 0; i < algorithmNames.Count; i++)

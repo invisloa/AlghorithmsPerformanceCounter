@@ -1,4 +1,5 @@
-﻿using AlghorithmsPerformanceCounter.Models.Algorithms;
+﻿using AlghorithmsPerformanceCounter.Models;
+using AlghorithmsPerformanceCounter.Models.Algorithms;
 using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
 using AlghorithmsPerformanceCounter.Models.ArrayInitializers;
 using System;
@@ -37,5 +38,6 @@ namespace AlghorithmsPerformanceCounter.Services
 		{
 			return new PerformancesCounter(algorithmName);
 		}
+		public static IAlgorithmPerformanceRow CreateAlgorithmPerformanceRow => new AlgorithmPerformanceRow();
 	}
 }
