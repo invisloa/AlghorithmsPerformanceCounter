@@ -33,7 +33,7 @@ namespace AlghorithmsPerformanceCounter
 		void PopulateArraysSizesTable()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			var firstEmptyColumn = new DataGridTextColumn() { Header = "", Width = 128 };
+			var firstEmptyColumn = new DataGridTextColumn() { Header = "", Width = 130 };
 			ArraySizeTable.Columns.Add(firstEmptyColumn);
 			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
 			{
