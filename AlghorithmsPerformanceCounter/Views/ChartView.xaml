@@ -13,8 +13,6 @@
             <!-- First ArraySizes DataGrid -->
 
             <DataGrid Name="ArraySizeTable" CanUserResizeColumns="False" CanUserReorderColumns="False">
-                <DataGrid.Columns>
-                </DataGrid.Columns>
             </DataGrid>
 
             <!-- Performances Table DataGrid -->
@@ -22,8 +20,6 @@
             <DataGrid Name="PerformancesTable" CanUserResizeColumns="False" 
                       CanUserReorderColumns="False" AutoGenerateColumns="False"
                       HorizontalScrollBarVisibility="Disabled">
-                <DataGrid.Columns>
-                </DataGrid.Columns>
             </DataGrid>
 
         <!-- Charts -->

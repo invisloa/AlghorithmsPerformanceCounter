@@ -25,7 +25,6 @@ namespace AlghorithmsPerformanceCounter
 		public ChartView(ChartViewModel chartViewModel)
 		{
 			InitializeComponent();
-			// Set the DataContext to the passed-in ChartViewModel
 			DataContext = chartViewModel;
 			PopulateArraysSizesTable();
 			_ = PopulatePerformancesTableAsync();
@@ -34,14 +33,13 @@ namespace AlghorithmsPerformanceCounter
 		void PopulateArraysSizesTable()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			var firstEmptyColumn = new DataGridTextColumn() { Header = "", Width = 125 };
+			var firstEmptyColumn = new DataGridTextColumn() { Header = "", Width = 128 };
 			ArraySizeTable.Columns.Add(firstEmptyColumn);
 			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
 			{
 				var newColumn = new DataGridTextColumn();
 				newColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				newColumn.Header = $"Array size {chartViewModel.ArraySizes[arrayIndex].Length}";
-				// Add the column to the DataGrid
 				ArraySizeTable.Columns.Add(newColumn);
 			}
 		}
@@ -62,12 +60,10 @@ namespace AlghorithmsPerformanceCounter
 				var actionsColumn = new DataGridTextColumn() { Binding = new Binding($"Actions[{arrayIndex}]") };
 				actionsColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				actionsColumn.Header = $"Actions";
-				// Add the column to the DataGrid
 				PerformancesTable.Columns.Add(actionsColumn);
 				var timeColumn = new DataGridTextColumn() { Binding = new Binding($"Time[{arrayIndex}]") };
 				timeColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				timeColumn.Header = $"Time (ms)";
-				// Add the column to the DataGrid
 				PerformancesTable.Columns.Add(timeColumn);
 			}
 			// Set the ItemsSource for the PerformancesTable DataGrid
