@@ -29,6 +29,6 @@
         </lvc:CartesianChart>
         <TextBlock Text="Algorithms Performance Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
 
-        <Button x:Name="BackToMainViewButton" Content="Back to Main View" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10" Click="BackToMainViewButton_Click"/>
+        <Button x:Name="BackToMainViewButton" Content="Back to Main View" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10" Command="{Binding NavigateBackToMainViewCommand}" />
     </StackPanel>
 </UserControl>

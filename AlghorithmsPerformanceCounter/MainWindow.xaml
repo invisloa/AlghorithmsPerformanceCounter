@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="800">
     <Grid>
-        <ContentControl x:Name="MainContentControl" Loaded="MainContentControl_Loaded"/>
+        <ContentControl x:Name="MainContentControl"/>
     </Grid>
 
 </Window>

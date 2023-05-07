@@ -37,7 +37,7 @@
             <Slider x:Name="NumberOfArraysSlider" Minimum="2" Maximum="20" TickFrequency="1" IsSnapToTickEnabled="True"  Margin="0,0,0,20" Value="{Binding NumberOfArrays}"/>
             <TextBlock Text="Max array size:" Margin="0,0,0,5"/>
             <TextBox x:Name="NumberOfRandomValuesInput" Margin="0,0,0,20" PreviewTextInput="NumberOfRandomValuesInput_PreviewTextInput" Text="{Binding NumberOfValuesPerArray, UpdateSourceTrigger=PropertyChanged}" />
-            <Button x:Name="NavigateToChartViewButton" Content="Show Charts" Click="NavigateToChartViewButton_Click" />
+            <Button x:Name="NavigateToChartViewButton" Content="Show Charts" Command="{Binding NavigateToChartViewCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

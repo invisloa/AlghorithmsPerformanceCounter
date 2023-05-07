@@ -6,30 +6,23 @@ namespace AlghorithmsPerformanceCounter
 {
 	public partial class MainWindow : Window
 	{
+
+
 		public MainWindow()
 		{
-			DataContext = new MainViewModel();
+			var mainViewModel = new MainViewModel();
+			DataContext = mainViewModel;
 			InitializeComponent();
-		}
 
-		private void MainContentControl_Loaded(object sender, RoutedEventArgs e)
-		{
-			var mainView = new MainView();
-			mainView.NavigateToChartView += MainView_NavigateToChartView;
-			MainContentControl.Content = mainView;
-		}
-		private void MainView_NavigateToChartView(object sender, EventArgs e)
-		{
-			var chartView = sender as ChartView;
-			var chartViewModel = chartView.DataContext as ChartViewModel;
-			chartView.NavigateBackToMainView += ChartView_NavigateBackToMainView;
-			MainContentControl.Content = chartView;
-		}
-		private void ChartView_NavigateBackToMainView(object sender, EventArgs e)
-		{
-			var mainView = new MainView();
-			mainView.NavigateToChartView += MainView_NavigateToChartView;
-			MainContentControl.Content = mainView;
+			mainViewModel.NavigateToChartView = () =>
+			{
+				var chartViewModel = new ChartViewModel(mainViewModel);
+				var chartView = new ChartView(chartViewModel);
+				chartViewModel.NavigateBackToMainView = () => MainContentControl.Content = new MainView { DataContext = mainViewModel };
+				MainContentControl.Content = chartView;
+			};
+
+			MainContentControl.Content = new MainView { DataContext = mainViewModel };
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using AlghorithmsPerformanceCounter.Models;
+using AlghorithmsPerformanceCounter.Services;
 using AlghorithmsPerformanceCounter.ViewModels;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -22,6 +23,7 @@ namespace AlghorithmsPerformanceCounter
 {
 	public partial class ChartView : UserControl
 	{
+
 		public ChartView(ChartViewModel chartViewModel)
 		{
 			InitializeComponent();
@@ -29,6 +31,9 @@ namespace AlghorithmsPerformanceCounter
 			PopulateArraysSizesTable();
 			_ = PopulatePerformancesTableAsync();
 			_ = PopulateChartsAsync();
+
+			chartViewModel.NavigateBackToMainViewCommand = new RelayCommand(param => chartViewModel.NavigateBackToMainView());
+
 		}
 		void PopulateArraysSizesTable()
 		{

@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
 using LiveCharts;
 using AlghorithmsPerformanceCounter.Models;
+using System.Windows.Input;
 
 namespace AlghorithmsPerformanceCounter.ViewModels
 {
@@ -22,6 +23,9 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		public Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortingPerformanceForAllArraysAndAlgorithms { get; } // second array is for each array scan first is for algorithms used
 		public  Task<List<IAlgorithmPerformanceRow>> AlgorithmPerformanceRows { get => GeneratePerformanceRowsAsync(); }
 		ObservableCollection<string> algorithmsNames = new ObservableCollection<string>();
+		public Action NavigateBackToMainView { get; set; }
+		public ICommand NavigateBackToMainViewCommand { get; set; }
+
 
 		public async Task SetAlgorithmsNamesAsync()
 		{
