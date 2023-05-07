@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Services
 {
-	public class AllAlgorithmsPerformance : IAllAlgorithmsPerformanceCounter
+	public class AllAlgorithmsPerformanceCounter : IAllAlgorithmsPerformanceCounter
 	{
 		int numberOfArrays;
 		int numberOfValuesInArray;
@@ -19,7 +19,7 @@ namespace AlghorithmsPerformanceCounter.Services
 		public int TotalNumberOfArraysToSort => numberOfArrays;
 		public int TotalNumberOfValuesInArray => numberOfValuesInArray;
 
-		public AllAlgorithmsPerformance(List<AbstractSortingAlgorithm> sortingAlgorithmsList)
+		public AllAlgorithmsPerformanceCounter(List<AbstractSortingAlgorithm> sortingAlgorithmsList)
 		{
 			this.sortingAlgorithmsList = sortingAlgorithmsList;
 		}
