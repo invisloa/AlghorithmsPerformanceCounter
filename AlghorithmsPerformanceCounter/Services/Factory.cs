@@ -34,11 +34,11 @@ namespace AlghorithmsPerformanceCounter.Services
 
 		#endregion
 
-		public static IAllAlgorithmsPerformanceCounter CreateAllAlgorithmsSorter => new AllAlgorithmsPerformance(AllSortingAlgorithmsList);
+		public static IAllAlgorithmsPerformanceCounter CreateAllAlgorithmsSorter => new AllAlgorithmsPerformanceCounter(AllSortingAlgorithmsList);
 		public static IAllAlgorithmsPerformanceCounter CreateCustomAlgorithmsSorter(List<AlgorithmSelection> algorithmSelections)
 		{
 			var selectedAlgorithms = algorithmSelections.Where(x => x.IsSelected).Select(x => x.Algorithm).ToList();
-			return new AllAlgorithmsPerformance(selectedAlgorithms);
+			return new AllAlgorithmsPerformanceCounter(selectedAlgorithms);
 		}
 		public static IAlgorithmPerformanceCounter CreatePerformanceCounter(string algorithmName)
 		{
