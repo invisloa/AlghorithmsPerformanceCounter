@@ -55,24 +55,25 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			ArraySizes = mainWindowViewModel.MultipleArrays;
 
 			// CREATE DATABASE AND DELETE DATABASE
-			var selectedAlgorithm = mainWindowViewModel.AlgorithmSelections.FirstOrDefault(a => a.Algorithm.ToString() == "EFMSSQL");
-			if (selectedAlgorithm?.IsSelected == true)
-				using (var db = new NumberDbContext())
+			var EFMSSQLAlgorithmSelection = mainWindowViewModel.AlgorithmSelections.FirstOrDefault(a => a.Algorithm.ToString() == "EFMSSQL");
+			if (EFMSSQLAlgorithmSelection?.IsSelected == true)
 			{
-				// Delete the existing database and create a new one
-				db.Database.EnsureDeleted();
-				db.Database.EnsureCreated();
-				for (int i = 0; i < ArraySizes.Length; i++)
+				using (var db = new NumberDbContext())
 				{
-					foreach (var num in ArraySizes[i])
+					// Delete the existing database and create a new one
+					db.Database.EnsureDeleted();
+					db.Database.EnsureCreated();
+					for (int i = 0; i < ArraySizes.Length; i++)
 					{
-						db.Numbers.Add(new Number { Value = num, ArrayId = i + 1 });  // ArrayId is i+1
+						foreach (var num in ArraySizes[i])
+						{
+							db.Numbers.Add(new Number { Value = num, ArrayId = i + 1 });  // ArrayId is i+1
+						}
 					}
+
+					db.SaveChanges();  // Saves all changes to the database
 				}
-
-				db.SaveChanges();  // Saves all changes to the database
 			}
-
 			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortAllAlgorithmsPerformances(this.mainWindowViewModel.MultipleArrays);
 			_ = SetAlgorithmsNamesAsync();
 		}
