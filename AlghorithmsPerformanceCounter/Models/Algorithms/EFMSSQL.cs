@@ -37,12 +37,18 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 					// Now arrayId should correspond to the array with the same size as int[] array
 
 					// Get and sort the numbers with this ArrayId
-					List<Number> numbers = dbContext.Numbers
-													.Where(n => n.ArrayId == arrayId)
-													.OrderBy(n => n.Value)
-													.ToList();
+					var numbers = dbContext.Numbers
+													.Where(n => n.ArrayId == arrayId);
+
+
+					performanceCounter.Stopwatch.Start();	// START COUNTING TIME
+
+					List<Number> sortedNumbers = numbers
+														.OrderBy(n => n.Value)
+														.ToList();
+					performanceCounter.Stopwatch.Stop();    // END COUNTING TIME
+
 				}
-				performanceCounter.Stopwatch.Stop();
 			});
 			return performanceCounter;
 		}
