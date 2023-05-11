@@ -45,6 +45,5 @@ namespace AlghorithmsPerformanceCounter.Models.ArrayInitializers
 		{
 			return random.Next(1, 1001);
 		}
-
 	}
 }
