@@ -19,7 +19,6 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 
 			await Task.Run(() =>
 			{
-				performanceCounter.Stopwatch.Start();
 				using (var dbContext = new NumberDbContext())
 				{
 					// Calculate the ArrayId by checking the cumulative size of the arrays
@@ -34,18 +33,11 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 					// Decrement arrayId because it's incremented one extra time in the loop
 					arrayId--;
 
-					// Now arrayId should correspond to the array with the same size as int[] array
-
 					// Get and sort the numbers with this ArrayId
-					var numbers = dbContext.Numbers
-													.Where(n => n.ArrayId == arrayId);
+					performanceCounter.Stopwatch.Start();   // START COUNTING TIME
 
+					int count = dbContext.Numbers.Where(x => x.ArrayId == arrayId).Count(); ;  // USING COUNT TO MATERIALIZE THE QUERRY TIME (COUNT SIGNIFICANTLY REDUCES THE TIME)
 
-					performanceCounter.Stopwatch.Start();	// START COUNTING TIME
-
-					List<Number> sortedNumbers = numbers
-														.OrderBy(n => n.Value)
-														.ToList();
 					performanceCounter.Stopwatch.Stop();    // END COUNTING TIME
 
 				}

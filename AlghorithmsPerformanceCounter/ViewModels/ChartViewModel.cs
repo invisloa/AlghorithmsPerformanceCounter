@@ -11,6 +11,7 @@ using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
 using LiveCharts;
 using AlghorithmsPerformanceCounter.Models;
 using System.Windows.Input;
+using AlghorithmsPerformanceCounter.Models.Algorithms;
 
 namespace AlghorithmsPerformanceCounter.ViewModels
 {
@@ -52,6 +53,26 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		{
 			this.mainWindowViewModel = mainWindowViewModel;
 			ArraySizes = mainWindowViewModel.MultipleArrays;
+
+			// CREATE DATABASE AND DELETE DATABASE
+			var selectedAlgorithm = mainWindowViewModel.AlgorithmSelections.FirstOrDefault(a => a.Algorithm.ToString() == "EFMSSQL");
+			if (selectedAlgorithm?.IsSelected == true)
+				using (var db = new NumberDbContext())
+			{
+				// Delete the existing database and create a new one
+				db.Database.EnsureDeleted();
+				db.Database.EnsureCreated();
+				for (int i = 0; i < ArraySizes.Length; i++)
+				{
+					foreach (var num in ArraySizes[i])
+					{
+						db.Numbers.Add(new Number { Value = num, ArrayId = i + 1 });  // ArrayId is i+1
+					}
+				}
+
+				db.SaveChanges();  // Saves all changes to the database
+			}
+
 			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortAllAlgorithmsPerformances(this.mainWindowViewModel.MultipleArrays);
 			_ = SetAlgorithmsNamesAsync();
 		}

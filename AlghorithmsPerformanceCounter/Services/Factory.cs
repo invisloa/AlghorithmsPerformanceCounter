@@ -18,7 +18,8 @@ namespace AlghorithmsPerformanceCounter.Services
 			CreateBubleSorter,
 			CreateInsertionSorter,
 			CreateHeapSorter,
-			CreateLinqSort
+			CreateLinqSort,
+			CreateEFMSSQL
 		};
 		public static IArrayInitializer CreateArrayInitializer => new ArrayInitializer();
 
@@ -31,6 +32,7 @@ namespace AlghorithmsPerformanceCounter.Services
 		public static AbstractSortingAlgorithm CreateInsertionSorter => new InsertionSort();
 		public static AbstractSortingAlgorithm CreateHeapSorter => new Heapsort();
 		public static AbstractSortingAlgorithm CreateLinqSort => new LinqSort();
+		public static AbstractSortingAlgorithm CreateEFMSSQL => new EFMSSQL();
 
 		#endregion
 
