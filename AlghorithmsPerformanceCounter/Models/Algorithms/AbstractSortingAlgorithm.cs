@@ -16,14 +16,14 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 		public abstract Task<IAlgorithmPerformanceCounter> SortArray(int[] array);
 		public abstract string Name { get; }
 
-		public async Task<ObservableCollection<IAlgorithmPerformanceCounter>> SortMultipleArrays(int[][] arrays)
+		public async Task<ObservableCollection<IAlgorithmPerformanceCounter>> SortAndListPerformancesAsync(int[][] arrays)
 		{
-			ObservableCollection<IAlgorithmPerformanceCounter> listOfCounters = new ObservableCollection<IAlgorithmPerformanceCounter>();
-			foreach (int[] arrayToSort in arrays)
+			ObservableCollection<IAlgorithmPerformanceCounter> listOfPerformancesCounters = new ObservableCollection<IAlgorithmPerformanceCounter>();
+			foreach (int[] arrayToSort in arrays)                                       // Sorting each array in all arrays
 			{
-				listOfCounters.Add(await SortArray(arrayToSort));
+				listOfPerformancesCounters.Add(await SortArray(arrayToSort));			// Sorting by one of the algorithms
 			}
-			return listOfCounters;
+			return listOfPerformancesCounters;
 		}
 
 		public abstract override string ToString();

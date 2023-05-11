@@ -27,14 +27,15 @@ namespace AlghorithmsPerformanceCounter.Services
 		public List<AbstractSortingAlgorithm> AllUsedAlgoritms => sortingAlgorithmsList;
 
 
-		public async Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortMultipleArrays(int[][] arraysToSort)
+		// All used algorithms sorting performances
+		public async Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortAllAlgorithmsPerformances(int[][] arraysToSort)
 		{
 			var allAlgorithmsScores = new ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>();
 			numberOfArrays = arraysToSort.Length;
 			numberOfValuesInArray = arraysToSort[0].Length;
-			foreach (AbstractSortingAlgorithm item in sortingAlgorithmsList)
+			foreach (AbstractSortingAlgorithm item in sortingAlgorithmsList)        // sorting by all the algorithms in the sortingAlgorithmsList
 			{
-				allAlgorithmsScores.Add(await item.SortMultipleArrays(arraysToSort));
+				allAlgorithmsScores.Add(await item.SortAndListPerformancesAsync(arraysToSort));
 			}
 			return allAlgorithmsScores;
 		}

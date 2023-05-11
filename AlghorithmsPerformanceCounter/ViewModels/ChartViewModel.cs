@@ -20,7 +20,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		public int[][] ArraySizes { get => arraySizes; set => arraySizes = value; }
 
 		private MainViewModel mainWindowViewModel;
-		public Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortingPerformanceForAllArraysAndAlgorithms { get; } // second array is for each array scan first is for algorithms used
+		public Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortingPerformanceForAllArraysAndAlgorithms { get; } // second array is for each array perfomances score first is for algorithm used
 		public  Task<List<IAlgorithmPerformanceRow>> AlgorithmPerformanceRows { get => GeneratePerformanceRowsAsync(); }
 		ObservableCollection<string> algorithmsNames = new ObservableCollection<string>();
 		public Action NavigateBackToMainView { get; set; }
@@ -52,7 +52,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		{
 			this.mainWindowViewModel = mainWindowViewModel;
 			ArraySizes = mainWindowViewModel.MultipleArrays;
-			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortMultipleArrays(this.mainWindowViewModel.MultipleArrays);
+			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortAllAlgorithmsPerformances(this.mainWindowViewModel.MultipleArrays);
 			_ = SetAlgorithmsNamesAsync();
 		}
 		private async Task<List<IAlgorithmPerformanceRow>> GeneratePerformanceRowsAsync()
@@ -63,7 +63,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			for (int i = 0; i < sortingPerformance.Count; i++)
 			{
 				var row = Factory.CreateAlgorithmPerformanceRow;
-				row.AlgorithmName = sortingPerformance[i][0].AlgorithmName;    // second array is for each array scan first is for algorithms used
+				row.AlgorithmName = sortingPerformance[i][0].AlgorithmName;    // second array is for each array perfomances first is for algorithm used
 				row.Actions = new List<long>();
 				row.Time = new List<double>();
 
