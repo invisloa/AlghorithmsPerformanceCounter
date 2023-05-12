@@ -36,7 +36,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 					// Get and sort the numbers with this ArrayId
 					performanceCounter.Stopwatch.Start();   // START COUNTING TIME
 
-					int count = dbContext.Numbers.Where(x => x.ArrayId == arrayId).Count(); ;  // USING COUNT TO MATERIALIZE THE QUERRY TIME (COUNT SIGNIFICANTLY REDUCES THE TIME)
+					var count = dbContext.Numbers.Where(x => x.ArrayId == arrayId).First(); ;  // USING First TO MATERIALIZE THE QUERRY TIME (First SIGNIFICANTLY REDUCES THE TIME)
 
 					performanceCounter.Stopwatch.Stop();    // END COUNTING TIME
 

@@ -27,7 +27,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		public Action NavigateBackToMainView { get; set; }
 		public ICommand NavigateBackToMainViewCommand { get; set; }
 
-
 		public async Task SetAlgorithmsNamesAsync()
 		{
 			if (algorithmsNames.Count == 0)
@@ -54,26 +53,12 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			this.mainWindowViewModel = mainWindowViewModel;
 			ArraySizes = mainWindowViewModel.MultipleArrays;
 
-			// CREATE DATABASE AND DELETE DATABASE
 			var EFMSSQLAlgorithmSelection = mainWindowViewModel.AlgorithmSelections.FirstOrDefault(a => a.Algorithm.ToString() == "EFMSSQL");
 			if (EFMSSQLAlgorithmSelection?.IsSelected == true)
 			{
-				using (var db = new NumberDbContext())
-				{
-					// Delete the existing database and create a new one
-					db.Database.EnsureDeleted();
-					db.Database.EnsureCreated();
-					for (int i = 0; i < ArraySizes.Length; i++)
-					{
-						foreach (var num in ArraySizes[i])
-						{
-							db.Numbers.Add(new Number { Value = num, ArrayId = i + 1 });  // ArrayId is i+1
-						}
-					}
-
-					db.SaveChanges();  // Saves all changes to the database
-				}
+				StartFreshDatabase();
 			}
+			// sort all arrays by all algorithms
 			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortAllAlgorithmsPerformances(this.mainWindowViewModel.MultipleArrays);
 			_ = SetAlgorithmsNamesAsync();
 		}
@@ -88,7 +73,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				row.AlgorithmName = sortingPerformance[i][0].AlgorithmName;    // second array is for each array perfomances first is for algorithm used
 				row.Actions = new List<long>();
 				row.Time = new List<double>();
-
 				for (int j = 0; j < sortingPerformance[i].Count; j++)
 				{
 					row.Actions.Add(sortingPerformance[i][j].ActionsTaken);
@@ -98,6 +82,24 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				performanceRows.Add(row);
 			}
 			return performanceRows;
+		}
+		private void StartFreshDatabase()
+		{
+			// CREATE Fresh DATABASE AND DELETE Old DATABASE
+			using (var db = new NumberDbContext())
+			{
+				// Delete the existing database and create a new one
+				db.Database.EnsureDeleted();
+				db.Database.EnsureCreated();
+				for (int i = 0; i < ArraySizes.Length; i++)
+				{
+					foreach (var num in ArraySizes[i])
+					{
+						db.Numbers.Add(new Number { Value = num, ArrayId = i + 1 });  // ArrayId is i+1
+					}
+				}
+				db.SaveChanges();  // Saves all changes to the database
+			}
 		}
 
 	}
