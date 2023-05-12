@@ -29,10 +29,8 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 						cumulativeSize += dbContext.Numbers.Count(n => n.ArrayId == arrayId);
 						arrayId++;
 					}
-
 					// Decrement arrayId because it's incremented one extra time in the loop
 					arrayId--;
-
 					// Get and sort the numbers with this ArrayId
 					performanceCounter.Stopwatch.Start();   // START COUNTING TIME
 
