@@ -9,6 +9,7 @@ namespace AlghorithmsPerformanceCounter.Models.ArrayInitializers
 	public class ArrayInitializer : IArrayInitializer
 	{
 		private const int minArraySize = 3;
+
 		private Random random = new Random();
 
 		public int[] SingleArrayInitializer(int numberOfValusInArray)
@@ -20,25 +21,24 @@ namespace AlghorithmsPerformanceCounter.Models.ArrayInitializers
 			}
 			return array;
 		}
-		public int[][] InitializeMultipleArrays(int numberOfArrays, int maxNumberOfValues)
-		{ 
-			int[][] arrayOfArrays = new int[numberOfArrays][];
+		public int[][] InitializeMultipleArrays(int arrayIncrementValue, int maxNumberOfValues)
+		{
+			// number of arrays but first array is always of size 3
+			int howManySubarrays = ((maxNumberOfValues-minArraySize)/arrayIncrementValue) +2; 
+			int[][] arrayOfArrays = new int[howManySubarrays][];
 			int[] baseArray = SingleArrayInitializer(maxNumberOfValues);
 			int[] firstArray = new int[minArraySize];
-			Array.Copy(baseArray, 0, firstArray, 0, minArraySize);
-			arrayOfArrays[0] = firstArray;
-			if (numberOfArrays > 2)
+			int currentArraySize = minArraySize;
+			int currentCreatedArrayIndex = 0;
+			while(currentArraySize < maxNumberOfValues)
 			{
-				for (int i = 1; i < numberOfArrays - 1; i++)
-				{
-					int calculatedSize = (maxNumberOfValues / numberOfArrays) * i;
-					int currentArraySize = Math.Min(calculatedSize, maxNumberOfValues);
-					int[] arrayToAdd = new int[currentArraySize];
-					Array.Copy(baseArray, 0, arrayToAdd, 0, currentArraySize);
-					arrayOfArrays[i] = arrayToAdd;
-				}
+				int[] arrayToAdd = new int[currentArraySize];
+				Array.Copy(baseArray, 0, arrayToAdd, 0, currentArraySize);
+				arrayOfArrays[currentCreatedArrayIndex] = arrayToAdd;
+				currentArraySize += arrayIncrementValue;
+				currentCreatedArrayIndex++;
 			}
-			arrayOfArrays[numberOfArrays - 1] = baseArray;
+			arrayOfArrays[arrayOfArrays.Length - 1] = baseArray;
 			return arrayOfArrays;
 		}
 		int ValuesRandoizer()

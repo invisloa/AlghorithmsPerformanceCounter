@@ -19,7 +19,7 @@
 
             <DataGrid Name="PerformancesTable" CanUserResizeColumns="False" 
                       CanUserReorderColumns="False" AutoGenerateColumns="False"
-                      HorizontalScrollBarVisibility="Disabled">
+                      HorizontalScrollBarVisibility="Visible" >
             </DataGrid>
 
         <!-- Charts -->

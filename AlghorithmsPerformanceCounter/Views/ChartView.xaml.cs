@@ -38,12 +38,12 @@ namespace AlghorithmsPerformanceCounter
 		void PopulateArraysSizesTable()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			var firstEmptyColumn = new DataGridTextColumn() { Header = "", Width = 128 };
+			var firstEmptyColumn = new DataGridTextColumn() { Header = "", MinWidth= 128 };
 			ArraySizeTable.Columns.Add(firstEmptyColumn);
 			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
 			{
 				var newColumn = new DataGridTextColumn();
-				newColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
+				newColumn.MinWidth = 150;
 				newColumn.Header = $"Array size {chartViewModel.ArraySizes[arrayIndex].Length}";
 				ArraySizeTable.Columns.Add(newColumn);
 			}
@@ -58,15 +58,15 @@ namespace AlghorithmsPerformanceCounter
 		async Task PopulatePerformancesTableAsync()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", Width = 125, Binding = new Binding("AlgorithmName") };
+			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", MinWidth = 125, Binding = new Binding("AlgorithmName") };
 			PerformancesTable.Columns.Add(algorithmsName);
 			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
 			{
-				var actionsColumn = new DataGridTextColumn() { Binding = new Binding($"Actions[{arrayIndex}]") };
+				var actionsColumn = new DataGridTextColumn() { MinWidth = 75, Binding = new Binding($"Actions[{arrayIndex}]") };
 				actionsColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				actionsColumn.Header = $"Actions";
 				PerformancesTable.Columns.Add(actionsColumn);
-				var timeColumn = new DataGridTextColumn() { Binding = new Binding($"Time[{arrayIndex}]") };
+				var timeColumn = new DataGridTextColumn() { MinWidth=75, Binding = new Binding($"Time[{arrayIndex}]") };
 				timeColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				timeColumn.Header = $"Time (ms)";
 				PerformancesTable.Columns.Add(timeColumn);
