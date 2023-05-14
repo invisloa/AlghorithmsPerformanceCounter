@@ -12,7 +12,7 @@
         <StackPanel>
             <!-- First ArraySizes DataGrid -->
 
-            <DataGrid Name="ArraySizeTable" CanUserResizeColumns="False" CanUserReorderColumns="False">
+            <DataGrid Name="ArraySizeTable"  HorizontalScrollBarVisibility="Hidden"  CanUserResizeColumns="False" CanUserReorderColumns="False">
             </DataGrid>
 
             <!-- Performances Table DataGrid -->

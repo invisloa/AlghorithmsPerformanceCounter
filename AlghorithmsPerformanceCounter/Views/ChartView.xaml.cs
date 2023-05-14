@@ -23,7 +23,8 @@ namespace AlghorithmsPerformanceCounter
 {
 	public partial class ChartView : UserControl
 	{
-
+		private ScrollViewer _arraySizeTableScrollViewer;
+		private ScrollViewer _performancesTableScrollViewer;
 		public ChartView(ChartViewModel chartViewModel)
 		{
 			InitializeComponent();
@@ -32,13 +33,26 @@ namespace AlghorithmsPerformanceCounter
 			_ = PopulatePerformancesTableAsync();
 			_ = PopulateChartsAsync();
 
+
+			ArraySizeTable.Loaded += ArraySizeTable_Loaded;
+			PerformancesTable.Loaded += PerformancesTable_Loaded; 
 			chartViewModel.NavigateBackToMainViewCommand = new RelayCommand(param => chartViewModel.NavigateBackToMainView());
 
 		}
+		class DummyRow
+		{
+			public string Size { get; set; } // Add more properties if needed
+		}
 		void PopulateArraysSizesTable()
 		{
+
+			int numberOfRows = PerformancesTable.Items.Count;
+			List<DummyRow> dummyRows = new List<DummyRow>();
+
+			dummyRows.Add(new DummyRow { Size = "" }); // Empty row
+
 			var chartViewModel = DataContext as ChartViewModel;
-			var firstEmptyColumn = new DataGridTextColumn() { Header = "", MinWidth= 128 };
+			var firstEmptyColumn = new DataGridTextColumn() { Header = "", MinWidth= 130 };
 			ArraySizeTable.Columns.Add(firstEmptyColumn);
 			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
 			{
@@ -47,6 +61,8 @@ namespace AlghorithmsPerformanceCounter
 				newColumn.Header = $"Array size {chartViewModel.ArraySizes[arrayIndex].Length}";
 				ArraySizeTable.Columns.Add(newColumn);
 			}
+			ArraySizeTable.ItemsSource = dummyRows;
+
 		}
 
 		public event EventHandler NavigateBackToMainView;
@@ -110,5 +126,52 @@ namespace AlghorithmsPerformanceCounter
 			}
 			chart1.Series = series;
 		}
+
+		//Synchronize ScrollBars
+		#region Synchronize ScrollBars
+		//ScrollSynchronization helper methods
+		private void ArraySizeTable_Loaded(object sender, RoutedEventArgs e)
+		{
+			// Find and store the ScrollViewer for the DataGrid.
+			_arraySizeTableScrollViewer = GetScrollViewer(ArraySizeTable);
+
+			// Add ScrollChanged event handler.
+			_arraySizeTableScrollViewer.ScrollChanged += ArraySizeTable_ScrollChanged;
+		}
+
+		private void PerformancesTable_Loaded(object sender, RoutedEventArgs e)
+		{
+			// Find and store the ScrollViewer for the DataGrid.
+			_performancesTableScrollViewer = GetScrollViewer(PerformancesTable);
+
+			// Add ScrollChanged event handler.
+			_performancesTableScrollViewer.ScrollChanged += PerformancesTable_ScrollChanged;
+		}
+
+		private void ArraySizeTable_ScrollChanged(object sender, ScrollChangedEventArgs e)
+		{
+			_performancesTableScrollViewer.ScrollToHorizontalOffset(e.HorizontalOffset);
+		}
+
+		private void PerformancesTable_ScrollChanged(object sender, ScrollChangedEventArgs e)
+		{
+			_arraySizeTableScrollViewer.ScrollToHorizontalOffset(e.HorizontalOffset);
+		}
+
+		// This helper method finds the ScrollViewer within the DataGrid control template.
+		private ScrollViewer GetScrollViewer(DependencyObject depObj)
+		{
+			if (depObj is ScrollViewer) return depObj as ScrollViewer;
+
+			for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+			{
+				var child = VisualTreeHelper.GetChild(depObj, i);
+
+				var result = GetScrollViewer(child);
+				if (result != null) return result;
+			}
+			return null;
+		}
+		#endregion
 	}
 }
