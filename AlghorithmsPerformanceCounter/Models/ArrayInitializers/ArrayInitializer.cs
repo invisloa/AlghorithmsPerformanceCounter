@@ -21,7 +21,7 @@ namespace AlghorithmsPerformanceCounter.Models.ArrayInitializers
 			return array;
 		}
 		public int[][] InitializeMultipleArrays(int numberOfArrays, int maxNumberOfValues)
-		{
+		{ 
 			int[][] arrayOfArrays = new int[numberOfArrays][];
 			int[] baseArray = SingleArrayInitializer(maxNumberOfValues);
 			int[] firstArray = new int[minArraySize];
