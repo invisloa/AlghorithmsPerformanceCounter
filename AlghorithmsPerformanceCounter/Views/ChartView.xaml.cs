@@ -34,7 +34,7 @@ namespace AlghorithmsPerformanceCounter
 			_ = PopulateChartsAsync();
 
 
-			ArraySizeTable.Loaded += ArraySizeTable_Loaded;
+			ArraySizeItemsControl.Loaded += ArraySizeTable_Loaded;
 			PerformancesTable.Loaded += PerformancesTable_Loaded; 
 			chartViewModel.NavigateBackToMainViewCommand = new RelayCommand(param => chartViewModel.NavigateBackToMainView());
 
@@ -49,17 +49,20 @@ namespace AlghorithmsPerformanceCounter
 			dummyRows.Add(new DummyRow { Size = "" }); // Empty row
 
 			var chartViewModel = DataContext as ChartViewModel;
-			var firstEmptyColumn = new DataGridTextColumn() { Header = "", MinWidth= 130 };
-			ArraySizeTable.Columns.Add(firstEmptyColumn);
-			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
+			ArraySizeItemsControl.Items.Add("Array Sizes");
+			foreach (var arraySize in chartViewModel.ArraySizes)
 			{
-				var newColumn = new DataGridTextColumn();
-				newColumn.MinWidth = 150;
-				newColumn.Header = $"Array size {chartViewModel.ArraySizes[arrayIndex].Length}";
-				ArraySizeTable.Columns.Add(newColumn);
+				ArraySizeItemsControl.Items.Add(arraySize.Length);
 			}
-			ArraySizeTable.ItemsSource = dummyRows;
-
+			/*			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
+						{
+							var newColumn = new DataGridTextColumn();
+							newColumn.MinWidth = 150;
+							newColumn.Header = $"Array size {chartViewModel.ArraySizes[arrayIndex].Length}";
+							ArraySizeTable.Columns.Add(newColumn);
+						}
+						ArraySizeTable.ItemsSource = dummyRows;
+			*/
 		}
 
 		public event EventHandler NavigateBackToMainView;
@@ -71,22 +74,34 @@ namespace AlghorithmsPerformanceCounter
 		async Task PopulatePerformancesTableAsync()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
-			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", MinWidth = 125, Binding = new Binding("AlgorithmName") };
+
+			// Define your alternating styles
+			var normalStyle = new Style(typeof(DataGridCell));
+			var alternateStyle = new Style(typeof(DataGridCell));
+			alternateStyle.Setters.Add(new Setter { Property = BackgroundProperty, Value = Brushes.Blue });
+
+			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", MinWidth = 143, Width = 143, Binding = new Binding("AlgorithmName") };
 			PerformancesTable.Columns.Add(algorithmsName);
+
 			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
 			{
 				var actionsColumn = new DataGridTextColumn() { MinWidth = 75, Binding = new Binding($"Actions[{arrayIndex}]") };
 				actionsColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				actionsColumn.Header = $"Actions";
+				actionsColumn.CellStyle = (arrayIndex % 2 == 0) ? normalStyle : alternateStyle;  // Set style based on column index
 				PerformancesTable.Columns.Add(actionsColumn);
-				var timeColumn = new DataGridTextColumn() { MinWidth=75, Binding = new Binding($"Time[{arrayIndex}]") };
+
+				var timeColumn = new DataGridTextColumn() { MinWidth = 75, Binding = new Binding($"Time[{arrayIndex}]") };
 				timeColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				timeColumn.Header = $"Time (ms)";
+				timeColumn.CellStyle = (arrayIndex % 2 == 0) ? normalStyle : alternateStyle;  // Set style based on column index
 				PerformancesTable.Columns.Add(timeColumn);
 			}
+
 			// Set the ItemsSource for the PerformancesTable DataGrid
 			PerformancesTable.ItemsSource = await chartViewModel.AlgorithmPerformanceRows;
 		}
+
 		async Task PopulateChartsAsync()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
@@ -130,7 +145,7 @@ namespace AlghorithmsPerformanceCounter
 		private void ArraySizeTable_Loaded(object sender, RoutedEventArgs e)
 		{
 			// Find and store the ScrollViewer for the DataGrid.
-			_arraySizeTableScrollViewer = GetScrollViewer(ArraySizeTable);
+			_arraySizeTableScrollViewer = GetScrollViewer(ArraySizeScrollViewer);
 
 			// Add ScrollChanged event handler.
 			_arraySizeTableScrollViewer.ScrollChanged += ArraySizeTable_ScrollChanged;
