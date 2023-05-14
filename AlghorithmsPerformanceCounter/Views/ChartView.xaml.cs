@@ -39,10 +39,7 @@ namespace AlghorithmsPerformanceCounter
 			chartViewModel.NavigateBackToMainViewCommand = new RelayCommand(param => chartViewModel.NavigateBackToMainView());
 
 		}
-		class DummyRow
-		{
-			public string Size { get; set; } // Add more properties if needed
-		}
+
 		void PopulateArraysSizesTable()
 		{
 
@@ -172,6 +169,11 @@ namespace AlghorithmsPerformanceCounter
 			}
 			return null;
 		}
+		class DummyRow
+		{
+			public string Size { get; set; } // Add more properties if needed
+		}
+
 		#endregion
 	}
 }
