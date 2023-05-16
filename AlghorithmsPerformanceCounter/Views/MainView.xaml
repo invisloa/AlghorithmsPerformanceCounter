@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:AlghorithmsPerformanceCounter" 
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -37,8 +38,8 @@
             <Slider x:Name="NumberOfArraysSlider" Minimum="2" Maximum="1000" TickFrequency="1" IsSnapToTickEnabled="True"  Margin="0,0,0,20" Value="{Binding ArrayIncrementFactor}"/>
             <TextBlock Text="Max array size:" Margin="0,0,0,5"/>
             <TextBox x:Name="NumberOfRandomValuesInput" Margin="0,0,0,20" PreviewTextInput="NumberOfRandomValuesInput_PreviewTextInput" Text="{Binding NumberOfValuesPerArray, UpdateSourceTrigger=PropertyChanged}" />
-            <Button x:Name="NavigateToChartViewButton" Content="Show Charts" Command="{Binding NavigateToChartViewCommand}" />
-            <ProgressBar x:Name="ProgBar" />
+            <Button x:Name="NavigateToChartViewButton" Content="Show Charts" Command="{Binding NavigateToChartViewCommand}" Click="NavigateToChartViewButton_Click_1" />
+            <fa:ImageAwesome x:Name="RefreshSign" Icon="Refresh" Margin="0 20 0 0" Spin="True" Height="48" Width="48" Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </UserControl>
