@@ -30,14 +30,12 @@ namespace AlghorithmsPerformanceCounter
 			InitializeComponent();
 			DataContext = chartViewModel;
 			PopulateArraysSizesTable();
-			_ = PopulatePerformancesTableAsync();
-			_ = PopulateChartsAsync();
-
-
-			ArraySizeItemsControl.Loaded += ArraySizeTable_Loaded;
-			PerformancesTable.Loaded += PerformancesTable_Loaded; 
+			_ = PopulatePerformancesTableAsync(); 
+			_ = PopulateActionsChartsAsync();    // this one is working
+			_ = PopulateTimeChartsAsync(); // if i change the order (so this will be called first this one is working)
+			ArraySizeItemsControl.Loaded += ArraySizeTable_Loaded;  // using those to synchronize scrollbars
+			PerformancesTable.Loaded += PerformancesTable_Loaded;   // using those to synchronize scrollbars
 			chartViewModel.NavigateBackToMainViewCommand = new RelayCommand(param => chartViewModel.NavigateBackToMainView());
-
 		}
 
 		void PopulateArraysSizesTable()
@@ -49,7 +47,6 @@ namespace AlghorithmsPerformanceCounter
 			dummyRows.Add(new DummyRow { Size = "" }); // Empty row
 
 			var chartViewModel = DataContext as ChartViewModel;
-			ArraySizeItemsControl.Items.Add("Array Sizes");
 			foreach (var arraySize in chartViewModel.ArraySizes)
 			{
 				ArraySizeItemsControl.Items.Add(arraySize.Length);
@@ -78,7 +75,7 @@ namespace AlghorithmsPerformanceCounter
 			// Define your alternating styles
 			var normalStyle = new Style(typeof(DataGridCell));
 			var alternateStyle = new Style(typeof(DataGridCell));
-			alternateStyle.Setters.Add(new Setter { Property = BackgroundProperty, Value = Brushes.Blue });
+			alternateStyle.Setters.Add(new Setter { Property = BackgroundProperty, Value = Brushes.Gray });
 
 			var algorithmsName = new DataGridTextColumn() { Header = "Algorithms name", MinWidth = 143, Width = 143, Binding = new Binding("AlgorithmName") };
 			PerformancesTable.Columns.Add(algorithmsName);
@@ -88,36 +85,35 @@ namespace AlghorithmsPerformanceCounter
 				var actionsColumn = new DataGridTextColumn() { MinWidth = 75, Binding = new Binding($"Actions[{arrayIndex}]") };
 				actionsColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				actionsColumn.Header = $"Actions";
-				actionsColumn.CellStyle = (arrayIndex % 2 == 0) ? normalStyle : alternateStyle;  // Set style based on column index
+				actionsColumn.CellStyle = alternateStyle;
 				PerformancesTable.Columns.Add(actionsColumn);
 
 				var timeColumn = new DataGridTextColumn() { MinWidth = 75, Binding = new Binding($"Time[{arrayIndex}]") };
 				timeColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				timeColumn.Header = $"Time (ms)";
-				timeColumn.CellStyle = (arrayIndex % 2 == 0) ? normalStyle : alternateStyle;  // Set style based on column index
+		//		timeColumn.CellStyle = (arrayIndex % 2 == 0) ? normalStyle : alternateStyle;  // Set style based on column index
 				PerformancesTable.Columns.Add(timeColumn);
 			}
-
 			// Set the ItemsSource for the PerformancesTable DataGrid
 			PerformancesTable.ItemsSource = await chartViewModel.AlgorithmPerformanceRows;
 		}
 
-		async Task PopulateChartsAsync()
+		async Task PopulateTimeChartsAsync()
 		{
 			var chartViewModel = DataContext as ChartViewModel;
 			var arraySizesLabels = chartViewModel.ArraySizes.Select(array => array.Length.ToString()).ToList();
-			chart1.AxisX.Add(new LiveCharts.Wpf.Axis
+			TimeComplexityChart.AxisX.Add(new LiveCharts.Wpf.Axis
 			{
 				Title = "Array Sizes",
 				Labels = arraySizesLabels,
 			});
-			chart1.AxisY.Add(new LiveCharts.Wpf.Axis
+			TimeComplexityChart.AxisY.Add(new LiveCharts.Wpf.Axis
 			{
 				Title = "Time Complexity",
 				LabelFormatter = value => value.ToString()
 			});
-			chart1.LegendLocation = LiveCharts.LegendLocation.Right;
-			chart1.Series.Clear();
+			TimeComplexityChart.LegendLocation = LiveCharts.LegendLocation.Right;
+			TimeComplexityChart.Series.Clear();
 			SeriesCollection series = new SeriesCollection();
 			var algorithmNames = chartViewModel.AlgorithmsNames;
 			var sortingPerformanceForAllArraysAndAlgorithms = await chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
@@ -136,10 +132,51 @@ namespace AlghorithmsPerformanceCounter
 					Values = new ChartValues<long>(values)
 				});
 			}
-			chart1.Series = series;
+			TimeComplexityChart.Series = series;
 		}
 
-		//Synchronize ScrollBars
+		async Task PopulateActionsChartsAsync()
+		{
+			var chartViewModel = DataContext as ChartViewModel;
+			var arraySizesLabels = chartViewModel.ArraySizes.Select(array => array.Length.ToString()).ToList();
+			ActionsCountChart.AxisX.Add(new LiveCharts.Wpf.Axis
+			{
+				Title = "Array Sizes",
+				Labels = arraySizesLabels,
+			});
+			ActionsCountChart.AxisY.Add(new LiveCharts.Wpf.Axis
+			{
+				Title = "Time Complexity",
+				LabelFormatter = value => value.ToString()
+			});
+			ActionsCountChart.LegendLocation = LiveCharts.LegendLocation.Right;
+			ActionsCountChart.Series.Clear();
+			SeriesCollection series = new SeriesCollection();
+			var algorithmNames = chartViewModel.AlgorithmsNames;
+			var sortingPerformanceForAllArraysAndAlgorithms = await chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
+
+			for (int i = 0; i < algorithmNames.Count; i++)
+			{
+				List<long> values = new List<long>();
+				for (int j = 0; j < arraySizesLabels.Count; j++)
+				{
+					var data = sortingPerformanceForAllArraysAndAlgorithms[i][j].ActionsTaken;
+					values.Add(data);
+				}
+				series.Add(new LineSeries()
+				{
+					Title = algorithmNames[i],
+					Values = new ChartValues<long>(values)
+				});
+			}
+			ActionsCountChart.Series = series;
+		}
+
+
+
+
+
+		//Synchronize ScrollBars REGION
 		#region Synchronize ScrollBars
 		//ScrollSynchronization helper methods
 		private void ArraySizeTable_Loaded(object sender, RoutedEventArgs e)

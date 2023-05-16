@@ -56,10 +56,14 @@
 
         <!-- Charts -->
         </StackPanel>
-        <lvc:CartesianChart MinHeight="200" x:Name="chart1">
+        <TextBlock Text="Algorithms Actions Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
 
-        </lvc:CartesianChart>
-        <TextBlock Text="Algorithms Performance Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
+        <lvc:CartesianChart MinHeight="200" x:Name="ActionsCountChart" />
+        
+        <TextBlock Text="Algorithms Time Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
+
+        <lvc:CartesianChart MinHeight="200" x:Name="TimeComplexityChart" />
+
 
         <Button x:Name="BackToMainViewButton" Content="Back to Main View" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10" Command="{Binding NavigateBackToMainViewCommand}" />
     </StackPanel>
