@@ -22,6 +22,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		public event PropertyChangedEventHandler PropertyChanged;
 		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_arrayIncementFactor, _numberOfValuesPerArray); }
 		public List<AlgorithmSelection> AlgorithmSelections { get; }
+
 		// RelayCommands
 		#region Commands
 		private ICommand _navigateToChartViewCommand;

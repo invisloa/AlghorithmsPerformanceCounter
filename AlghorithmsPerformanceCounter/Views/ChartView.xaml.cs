@@ -42,9 +42,11 @@ namespace AlghorithmsPerformanceCounter
 		}
 		private async Task InitializeAsync()
 		{
+
 			await PopulatePerformancesTableAsync();
 			await PopulateActionsChartsAsync();
-			// await PopulateTimeChartsAsync();
+			await PopulateTimeChartsAsync();
+
 		}
 		void PopulateArraysSizesTable()
 		{
@@ -163,6 +165,8 @@ namespace AlghorithmsPerformanceCounter
 			}
 			ActionsCountChart.Series = series;
 		}
+
+
 		//Synchronize ScrollBars REGION
 		#region Synchronize ScrollBars
 		//ScrollSynchronization helper methods
@@ -207,10 +211,6 @@ namespace AlghorithmsPerformanceCounter
 				if (result != null) return result;
 			}
 			return null;
-		}
-		class DummyRow
-		{
-			public string Size { get; set; } // Add more properties if needed
 		}
 		#endregion
 	}

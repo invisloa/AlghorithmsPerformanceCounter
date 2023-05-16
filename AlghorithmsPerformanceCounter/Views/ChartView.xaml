@@ -10,11 +10,6 @@
              >
     <StackPanel>
         <StackPanel>
-            <!-- First ArraySizes DataGrid -->
-
-
-
-            <!-- Your ScrollViewer -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -22,7 +17,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Your fixed content -->
-                <Label Grid.Column="0" Content="Array sizes:" MinWidth="149" BorderBrush="Aqua" BorderThickness="1" />
+                <Label Grid.Column="0" Content="Array sizes:" MinWidth="149" BorderBrush="DarkGoldenrod" BorderThickness="1" />
 
                 <!-- Your ScrollViewer -->
                 <ScrollViewer Grid.Column="1" x:Name="ArraySizeScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
@@ -30,25 +25,19 @@
                     <ItemsControl x:Name="ArraySizeItemsControl">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal"/>
+                                <UniformGrid Rows="1"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <!-- Change this to Button if you want each item to be a button -->
-                                <Label Content="{Binding}" MinWidth="150" BorderBrush="Aqua" BorderThickness="1" HorizontalContentAlignment="Center"/>
+                                <Label Content="{Binding}" MinWidth="150" BorderBrush="DarkGoldenrod" BorderThickness="1" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
             </Grid>
 
-
-
-
-
             <!-- Performances Table DataGrid -->
-
             <DataGrid Name="PerformancesTable" CanUserResizeColumns="False" 
                       CanUserReorderColumns="False" AutoGenerateColumns="False"
                       HorizontalScrollBarVisibility="Visible" IsReadOnly="True" FrozenColumnCount="1" >
@@ -58,12 +47,11 @@
         </StackPanel>
         <TextBlock Text="Algorithms Actions Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
 
-        <lvc:CartesianChart MinHeight="200" x:Name="ActionsCountChart" />
-        
+        <lvc:CartesianChart MinHeight="200" x:Name="ActionsCountChart" Zoom="Xy" />
+
         <TextBlock Text="Algorithms Time Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
 
-        <lvc:CartesianChart MinHeight="200" x:Name="TimeComplexityChart" />
-
+        <lvc:CartesianChart MinHeight="200" x:Name="TimeComplexityChart" Zoom="Xy" />
 
         <Button x:Name="BackToMainViewButton" Content="Back to Main View" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10" Command="{Binding NavigateBackToMainViewCommand}" />
     </StackPanel>

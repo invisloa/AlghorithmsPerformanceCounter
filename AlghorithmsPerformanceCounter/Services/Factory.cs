@@ -17,7 +17,7 @@ namespace AlghorithmsPerformanceCounter.Services
 			CreateBubleSorter,
 			CreateInsertionSorter,
 			CreateHeapSorter,
-			CreateMergeSorter,
+			//CreateMergeSorter,
 			CreateLinqSort,
 			CreateEFMSSQL
 		};

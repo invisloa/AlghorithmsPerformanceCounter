@@ -16,6 +16,7 @@ namespace AlghorithmsPerformanceCounter
 
 			mainViewModel.NavigateToChartView = async () =>
 			{
+				BusyIndicator.Visibility = Visibility.Visible;
 				var chartViewModel = new ChartViewModel(mainViewModel);
 				ChartView chartView = await ChartView.CreateAsync(chartViewModel);
 				chartViewModel.NavigateBackToMainView = () => MainContentControl.Content = new MainView { DataContext = mainViewModel };
