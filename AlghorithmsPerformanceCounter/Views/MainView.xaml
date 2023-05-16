@@ -39,7 +39,7 @@
             <TextBlock Text="Max array size:" Margin="0,0,0,5"/>
             <TextBox x:Name="NumberOfRandomValuesInput" Margin="0,0,0,20" PreviewTextInput="NumberOfRandomValuesInput_PreviewTextInput" Text="{Binding NumberOfValuesPerArray, UpdateSourceTrigger=PropertyChanged}" />
             <Button x:Name="NavigateToChartViewButton" Content="Show Charts" Command="{Binding NavigateToChartViewCommand}" Click="NavigateToChartViewButton_Click_1" />
-            <fa:ImageAwesome x:Name="RefreshSign" Icon="Refresh" Margin="0 20 0 0" Spin="True" Height="48" Width="48" Visibility="Collapsed"/>
+            <fa:ImageAwesome x:Name="RefreshSign" Icon="Refresh" Margin="0 20 0 0" Spin="True" Height="48" Width="48" Visibility="{Binding SpinnerVisibility}"/>
         </StackPanel>
     </Grid>
 </UserControl>

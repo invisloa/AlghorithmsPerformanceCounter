@@ -21,7 +21,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		public int[][] ArraySizes { get => arraySizes; set => arraySizes = value; }
 
 		private MainViewModel mainWindowViewModel;
-		public Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortingPerformanceForAllArraysAndAlgorithms { get; } // second array is for each array perfomances score first is for algorithm used
+		public Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortingPerformanceForAllArraysAndAlgorithms { get; private set; } // second array is for each array perfomances score first is for algorithm used
 		public  Task<List<IAlgorithmPerformanceRow>> AlgorithmPerformanceRows { get => GeneratePerformanceRowsAsync(); }
 		ObservableCollection<string> algorithmsNames = new ObservableCollection<string>();
 		public Action NavigateBackToMainView { get; set; }
@@ -48,19 +48,24 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			}
 		}
 		IAllAlgorithmsPerformanceCounter multiAlgorithmsSorter => Factory.CreateCustomAlgorithmsSorter(mainWindowViewModel.AlgorithmSelections);
-		public ChartViewModel(MainViewModel mainWindowViewModel)
+		private ChartViewModel() { }
+
+		public static async Task<ChartViewModel> CreateAsync(MainViewModel mainWindowViewModel)
 		{
-			this.mainWindowViewModel = mainWindowViewModel;
-			ArraySizes = mainWindowViewModel.MultipleArrays;
+			var model = new ChartViewModel();
+			model.mainWindowViewModel = mainWindowViewModel;
+			model.ArraySizes = mainWindowViewModel.MultipleArrays;
 
 			var EFMSSQLAlgorithmSelection = mainWindowViewModel.AlgorithmSelections.FirstOrDefault(a => a.Algorithm.ToString() == "EFMSSQL");
 			if (EFMSSQLAlgorithmSelection?.IsSelected == true)
 			{
-				StartFreshDatabase();
+				model.StartFreshDatabase();
 			}
 			// sort all arrays by all algorithms
-			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortAllAlgorithmsPerformancesAsync(this.mainWindowViewModel.MultipleArrays);
-			_ = SetAlgorithmsNamesAsync();
+			model.SortingPerformanceForAllArraysAndAlgorithms = model.multiAlgorithmsSorter.SortAllAlgorithmsPerformancesAsync(mainWindowViewModel.MultipleArrays);
+			await model.SetAlgorithmsNamesAsync();
+
+			return model;
 		}
 		private async Task<List<IAlgorithmPerformanceRow>> GeneratePerformanceRowsAsync()
 		{

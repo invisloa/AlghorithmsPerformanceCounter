@@ -16,10 +16,15 @@ namespace AlghorithmsPerformanceCounter
 
 			mainViewModel.NavigateToChartView = async () =>
 			{
-				var chartViewModel = new ChartViewModel(mainViewModel);
+				mainViewModel.IsSpinnerActive = true;
+
+				var chartViewModel = await ChartViewModel.CreateAsync(mainViewModel);
 				ChartView chartView = await ChartView.CreateAsync(chartViewModel);
+				
 				chartViewModel.NavigateBackToMainView = () => MainContentControl.Content = new MainView { DataContext = mainViewModel };
 				MainContentControl.Content = chartView;
+				mainViewModel.IsSpinnerActive = false;
+
 			};
 
 

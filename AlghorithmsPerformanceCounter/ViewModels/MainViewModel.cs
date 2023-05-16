@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace AlghorithmsPerformanceCounter.ViewModels
@@ -18,11 +19,32 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		private const int MaxValuesPerArray = 1000000;
 		private int _arrayIncementFactor = 2;
 		private int _numberOfValuesPerArray = 1000;
+		private bool _isSpinnerActive = false; // TO DO TO CHANGE
 		IArrayInitializer arrayInitializer = Factory.CreateArrayInitializer;
 		public event PropertyChangedEventHandler PropertyChanged;
 		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_arrayIncementFactor, _numberOfValuesPerArray); }
 		public List<AlgorithmSelection> AlgorithmSelections { get; }
+		public bool IsSpinnerActive // TO DO TO CHANGE
+		{
+			get => _isSpinnerActive;
+			set
+			{
+				_isSpinnerActive = value;
+				SpinnerVisibility = value ? Visibility.Visible : Visibility.Collapsed;
+				OnPropertyChanged(nameof(IsSpinnerActive));
+			}
+		}
+		private Visibility _spinnerVisibility = Visibility.Collapsed;
 
+		public Visibility SpinnerVisibility
+		{
+			get => _spinnerVisibility;
+			set
+			{
+				_spinnerVisibility = value;
+				OnPropertyChanged(nameof(SpinnerVisibility));
+			}
+		}
 		// RelayCommands
 		#region Commands
 		private ICommand _navigateToChartViewCommand;
@@ -59,6 +81,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				}
 			}
 		}
+
 
 		public MainViewModel()
 		{
