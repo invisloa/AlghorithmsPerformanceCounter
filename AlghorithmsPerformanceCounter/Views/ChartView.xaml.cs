@@ -25,41 +25,34 @@ namespace AlghorithmsPerformanceCounter
 	{
 		private ScrollViewer _arraySizeTableScrollViewer;
 		private ScrollViewer _performancesTableScrollViewer;
-		public ChartView(ChartViewModel chartViewModel)
+		private ChartView(ChartViewModel chartViewModel)
 		{
 			InitializeComponent();
 			DataContext = chartViewModel;
 			PopulateArraysSizesTable();
-			_ = PopulatePerformancesTableAsync(); 
-			_ = PopulateActionsChartsAsync();    // this one is working
-			_ = PopulateTimeChartsAsync(); // if i change the order (so this will be called first this one is working)
-			ArraySizeItemsControl.Loaded += ArraySizeTable_Loaded;  // using those to synchronize scrollbars
-			PerformancesTable.Loaded += PerformancesTable_Loaded;   // using those to synchronize scrollbars
+			ArraySizeItemsControl.Loaded += ArraySizeTable_Loaded;
+			PerformancesTable.Loaded += PerformancesTable_Loaded;
 			chartViewModel.NavigateBackToMainViewCommand = new RelayCommand(param => chartViewModel.NavigateBackToMainView());
 		}
-
+		public static async Task<ChartView> CreateAsync(ChartViewModel chartViewModel)
+		{
+			var chartView = new ChartView(chartViewModel);
+			await chartView.InitializeAsync();
+			return chartView;
+		}
+		private async Task InitializeAsync()
+		{
+			await PopulatePerformancesTableAsync();
+			await PopulateActionsChartsAsync();
+			// await PopulateTimeChartsAsync();
+		}
 		void PopulateArraysSizesTable()
 		{
-
-			int numberOfRows = PerformancesTable.Items.Count;
-			List<DummyRow> dummyRows = new List<DummyRow>();
-
-			dummyRows.Add(new DummyRow { Size = "" }); // Empty row
-
 			var chartViewModel = DataContext as ChartViewModel;
 			foreach (var arraySize in chartViewModel.ArraySizes)
 			{
 				ArraySizeItemsControl.Items.Add(arraySize.Length);
 			}
-			/*			for (int arrayIndex = 0; arrayIndex < chartViewModel.ArraySizes.Length; arrayIndex++)
-						{
-							var newColumn = new DataGridTextColumn();
-							newColumn.MinWidth = 150;
-							newColumn.Header = $"Array size {chartViewModel.ArraySizes[arrayIndex].Length}";
-							ArraySizeTable.Columns.Add(newColumn);
-						}
-						ArraySizeTable.ItemsSource = dummyRows;
-			*/
 		}
 
 		public event EventHandler NavigateBackToMainView;
@@ -72,7 +65,7 @@ namespace AlghorithmsPerformanceCounter
 		{
 			var chartViewModel = DataContext as ChartViewModel;
 
-			// Define your alternating styles
+			// Define styles
 			var normalStyle = new Style(typeof(DataGridCell));
 			var alternateStyle = new Style(typeof(DataGridCell));
 			alternateStyle.Setters.Add(new Setter { Property = BackgroundProperty, Value = Brushes.Gray });
@@ -91,7 +84,6 @@ namespace AlghorithmsPerformanceCounter
 				var timeColumn = new DataGridTextColumn() { MinWidth = 75, Binding = new Binding($"Time[{arrayIndex}]") };
 				timeColumn.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
 				timeColumn.Header = $"Time (ms)";
-		//		timeColumn.CellStyle = (arrayIndex % 2 == 0) ? normalStyle : alternateStyle;  // Set style based on column index
 				PerformancesTable.Columns.Add(timeColumn);
 			}
 			// Set the ItemsSource for the PerformancesTable DataGrid
@@ -171,11 +163,6 @@ namespace AlghorithmsPerformanceCounter
 			}
 			ActionsCountChart.Series = series;
 		}
-
-
-
-
-
 		//Synchronize ScrollBars REGION
 		#region Synchronize ScrollBars
 		//ScrollSynchronization helper methods
@@ -225,7 +212,6 @@ namespace AlghorithmsPerformanceCounter
 		{
 			public string Size { get; set; } // Add more properties if needed
 		}
-
 		#endregion
 	}
 }

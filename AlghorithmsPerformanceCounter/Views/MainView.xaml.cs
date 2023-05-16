@@ -20,11 +20,11 @@ namespace AlghorithmsPerformanceCounter
 				e.Handled = true;
 			}
 		}
-		private void NavigateToChartViewButton_Click(object sender, System.Windows.RoutedEventArgs e)
+		private async void NavigateToChartViewButton_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			var mainWindowViewModel = DataContext as MainViewModel;
 			var chartViewModel = new ChartViewModel(mainWindowViewModel);
-			var chartView = new ChartView(chartViewModel);
+			ChartView chartView = await ChartView.CreateAsync(chartViewModel);
 			NavigateToChartView?.Invoke(chartView, EventArgs.Empty);
 		}
 	}

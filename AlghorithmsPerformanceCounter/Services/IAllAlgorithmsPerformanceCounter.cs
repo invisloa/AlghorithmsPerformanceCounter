@@ -10,7 +10,7 @@ namespace AlghorithmsPerformanceCounter.Services
 	public interface IAllAlgorithmsPerformanceCounter
 	{
 		List<AbstractSortingAlgorithm> AllUsedAlgoritms { get; }
-		Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortAllAlgorithmsPerformances(int[][] arraysToSort);
+		Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortAllAlgorithmsPerformancesAsync(int[][] arraysToSort);
 		public int TotalNumberOfArraysToSort { get; }
 		public int TotalNumberOfValuesInArray { get; }
 	}

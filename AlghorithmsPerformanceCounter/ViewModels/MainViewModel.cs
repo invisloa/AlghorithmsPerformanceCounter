@@ -16,11 +16,11 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 	{
 		private const int MinValuesPerArray = 1;
 		private const int MaxValuesPerArray = 1000000;
-		private int _numberOfArrays = 2;
+		private int _arrayIncementFactor = 2;
 		private int _numberOfValuesPerArray = 1000;
 		IArrayInitializer arrayInitializer = Factory.CreateArrayInitializer;
 		public event PropertyChangedEventHandler PropertyChanged;
-		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_numberOfArrays, _numberOfValuesPerArray); }
+		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_arrayIncementFactor, _numberOfValuesPerArray); }
 		public List<AlgorithmSelection> AlgorithmSelections { get; }
 		// RelayCommands
 		#region Commands
@@ -34,15 +34,15 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		public Action NavigateBackToMainView { get; set; }
 		#endregion
 
-		public int NumberOfArrays
+		public int ArrayIncrementFactor
 		{
-			get { return _numberOfArrays; }
+			get { return _arrayIncementFactor; }
 			set
 			{
-				if (_numberOfArrays != value)
+				if (_arrayIncementFactor != value)
 				{
-					_numberOfArrays = value;
-					OnPropertyChanged(nameof(NumberOfArrays));
+					_arrayIncementFactor = value;
+					OnPropertyChanged(nameof(ArrayIncrementFactor));
 				}
 			}
 		}

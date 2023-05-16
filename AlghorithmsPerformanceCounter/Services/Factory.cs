@@ -13,11 +13,11 @@ namespace AlghorithmsPerformanceCounter.Services
 		// List of sorting algorithms to be used in calculations
 		public static List<AbstractSortingAlgorithm> AllSortingAlgorithmsList = new List<AbstractSortingAlgorithm>()
 		{
-			CreateMergeSorter,
 			CreateQuicksort,
 			CreateBubleSorter,
 			CreateInsertionSorter,
 			CreateHeapSorter,
+			CreateMergeSorter,
 			CreateLinqSort,
 			CreateEFMSSQL
 		};

@@ -28,7 +28,7 @@ namespace AlghorithmsPerformanceCounter.Services
 
 
 		// All used algorithms sorting performances
-		public async Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortAllAlgorithmsPerformances(int[][] arraysToSort)
+		public async Task<ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>> SortAllAlgorithmsPerformancesAsync(int[][] arraysToSort)
 		{
 			var allAlgorithmsScores = new ObservableCollection<ObservableCollection<IAlgorithmPerformanceCounter>>();
 			numberOfArrays = arraysToSort.Length;

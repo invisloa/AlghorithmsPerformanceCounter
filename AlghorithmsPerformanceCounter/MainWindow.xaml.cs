@@ -14,13 +14,14 @@ namespace AlghorithmsPerformanceCounter
 			DataContext = mainViewModel;
 			InitializeComponent();
 
-			mainViewModel.NavigateToChartView = () =>
+			mainViewModel.NavigateToChartView = async () =>
 			{
 				var chartViewModel = new ChartViewModel(mainViewModel);
-				var chartView = new ChartView(chartViewModel);
+				ChartView chartView = await ChartView.CreateAsync(chartViewModel);
 				chartViewModel.NavigateBackToMainView = () => MainContentControl.Content = new MainView { DataContext = mainViewModel };
 				MainContentControl.Content = chartView;
 			};
+
 
 			MainContentControl.Content = new MainView { DataContext = mainViewModel };
 		}

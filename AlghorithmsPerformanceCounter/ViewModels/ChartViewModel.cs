@@ -59,7 +59,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				StartFreshDatabase();
 			}
 			// sort all arrays by all algorithms
-			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortAllAlgorithmsPerformances(this.mainWindowViewModel.MultipleArrays);
+			SortingPerformanceForAllArraysAndAlgorithms = multiAlgorithmsSorter.SortAllAlgorithmsPerformancesAsync(this.mainWindowViewModel.MultipleArrays);
 			_ = SetAlgorithmsNamesAsync();
 		}
 		private async Task<List<IAlgorithmPerformanceRow>> GeneratePerformanceRowsAsync()

@@ -25,16 +25,16 @@
         </ListBox>
 
 
-        <StackPanel MinWidth="150" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel MinWidth="250" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width = "*" />
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Number of Arrays:" />
-                <TextBlock  Grid.Column="1" x:Name="HowManyArraysLabel" Text="{Binding NumberOfArrays}" HorizontalAlignment="Right"/>
+                <TextBlock Text="Min. Array increment factor" />
+                <TextBlock  Grid.Column="1" x:Name="HowManyArraysLabel" Text="{Binding ArrayIncrementFactor}" HorizontalAlignment="Right"/>
             </Grid>
-            <Slider x:Name="NumberOfArraysSlider" Minimum="2" Maximum="20" TickFrequency="1" IsSnapToTickEnabled="True"  Margin="0,0,0,20" Value="{Binding NumberOfArrays}"/>
+            <Slider x:Name="NumberOfArraysSlider" Minimum="2" Maximum="1000" TickFrequency="1" IsSnapToTickEnabled="True"  Margin="0,0,0,20" Value="{Binding ArrayIncrementFactor}"/>
             <TextBlock Text="Max array size:" Margin="0,0,0,5"/>
             <TextBox x:Name="NumberOfRandomValuesInput" Margin="0,0,0,20" PreviewTextInput="NumberOfRandomValuesInput_PreviewTextInput" Text="{Binding NumberOfValuesPerArray, UpdateSourceTrigger=PropertyChanged}" />
             <Button x:Name="NavigateToChartViewButton" Content="Show Charts" Command="{Binding NavigateToChartViewCommand}" />
