@@ -26,7 +26,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		// RelayCommands
 		#region Commands
 		private ICommand _navigateToChartViewCommand;
-public ICommand NavigateToChartViewCommand => _navigateToChartViewCommand ??= new AsyncRelayCommand(async () => await NavigateToChartView(), () => true);
+		public ICommand NavigateToChartViewCommand => _navigateToChartViewCommand ??= new RelayCommand(param => NavigateToChartView(), param => true);
 
 		private ICommand _navigateBackToMainViewCommand;
 		public ICommand NavigateBackToMainViewCommand => _navigateBackToMainViewCommand ??= new RelayCommand(param => NavigateBackToMainView(), param => true);
