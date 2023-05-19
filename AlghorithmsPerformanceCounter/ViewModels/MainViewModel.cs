@@ -18,11 +18,11 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		private const int MinValuesPerArray = 1;
 		private const int MaxValuesPerArray = 1000000;
 		private int _arrayIncementFactor = 2;
-		private int _numberOfValuesPerArray = 1000;
+		private int _maxArraySize = 1000;
 		private bool _isSpinnerActive = false; // TO DO TO CHANGE
 		IArrayInitializer arrayInitializer;
 		public event PropertyChangedEventHandler PropertyChanged;
-		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_arrayIncementFactor, _numberOfValuesPerArray); }
+		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_arrayIncementFactor, _maxArraySize); }
 		public List<AlgorithmSelection> AlgorithmSelections { get; }
 
 		public bool IsSpinnerActive // TO DO TO CHANGE
@@ -96,18 +96,26 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				{
 					_arrayIncementFactor = value;
 					OnPropertyChanged(nameof(ArrayIncrementFactor));
+					if(_arrayIncementFactor > MaxArraySize)
+					{
+						MaxArraySize = _arrayIncementFactor+3;
+					}
 				}
 			}
 		}
-		public int NumberOfValuesPerArray
+		public int MaxArraySize
 		{
-			get { return _numberOfValuesPerArray; }
+			get { return _maxArraySize; }
 			set
 			{
-				if (_numberOfValuesPerArray != value)
+				if (_maxArraySize != value)
 				{
-					_numberOfValuesPerArray = Math.Clamp(value, MinValuesPerArray, MaxValuesPerArray);
-					OnPropertyChanged(nameof(NumberOfValuesPerArray));
+					if (_arrayIncementFactor > _maxArraySize)
+					{
+						_maxArraySize = _arrayIncementFactor + 3;
+					}
+					_maxArraySize = Math.Clamp(value, MinValuesPerArray, MaxValuesPerArray);
+					OnPropertyChanged(nameof(MaxArraySize));
 				}
 			}
 		}
