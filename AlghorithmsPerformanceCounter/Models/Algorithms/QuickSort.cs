@@ -30,9 +30,9 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 
 		public void QSort(int[] array, int left, int right, IAlgorithmPerformanceCounter performanceCounter)
 		{
-			performanceCounter.IncrementActionsTaken();
 			if (left < right) 
 			{
+				performanceCounter.IncrementActionsTaken();
 				int pivotIndex = Partition(array, left, right, performanceCounter);
 				QSort(array, left, pivotIndex - 1, performanceCounter);
 				QSort(array, pivotIndex + 1, right, performanceCounter);

@@ -52,9 +52,12 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			get => arrayInitializer;
 			set
 			{
-				arrayInitializer = value;
-				OnPropertyChanged(nameof(SelectedArrayInitializer));
-				OnPropertyChanged(nameof(MultipleArrays));
+				if (value != null)
+				{
+					arrayInitializer = value;
+					OnPropertyChanged(nameof(SelectedArrayInitializer));
+					OnPropertyChanged(nameof(MultipleArrays));
+				}
 			}
 		}
 		// RelayCommands
