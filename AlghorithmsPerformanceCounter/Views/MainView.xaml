@@ -5,26 +5,39 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:AlghorithmsPerformanceCounter" 
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:converters="clr-namespace:AlghorithmsPerformanceCounter.Services"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="850" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:BoolInverter x:Key="BoolInverter"/>
+    </UserControl.Resources>
+    <Grid IsEnabled="{Binding IsSpinnerActive, Converter={StaticResource BoolInverter}}">
+        <StackPanel>
+            <!--Algorithms Selection Panel-->
+            <TextBlock Text="Choose sorting algorithms:" HorizontalAlignment="Center" Margin="10"/>
+            <ListBox ItemsSource="{Binding AlgorithmSelections}"
+                     SelectionMode="Multiple" HorizontalAlignment="Center" BorderThickness="0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <CheckBox Content="{Binding Algorithm.Name}"
+                                  Margin="3"
+                                  IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListBox>
 
-    <Grid>
-        <ListBox ItemsSource="{Binding AlgorithmSelections}"
-         SelectionMode="Multiple" HorizontalAlignment="Center" BorderThickness="0">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <CheckBox Content="{Binding Algorithm.Name}"
-                      Margin="3"
-                      IsChecked="{Binding IsSelected, Mode=TwoWay}" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ListBox>
-
+            <!--Array Initializers Scenarios-->
+        <TextBlock Text="Select array scenario:" HorizontalAlignment="Center" Margin="10"/>
+        <ComboBox x:Name="ArrayScenarioCombobox" HorizontalAlignment="Center" Margin="10" 
+          ItemsSource="{Binding ArrayInitializers}" 
+          SelectedItem="{Binding SelectedArrayInitializer}" 
+          DisplayMemberPath="Name" />
+        </StackPanel>
 
         <StackPanel MinWidth="250" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid>
@@ -38,7 +51,7 @@
             <Slider x:Name="NumberOfArraysSlider" Minimum="2" Maximum="1000" TickFrequency="1" IsSnapToTickEnabled="True"  Margin="0,0,0,20" Value="{Binding ArrayIncrementFactor}"/>
             <TextBlock Text="Max array size:" Margin="0,0,0,5"/>
             <TextBox x:Name="NumberOfRandomValuesInput" Margin="0,0,0,20" PreviewTextInput="NumberOfRandomValuesInput_PreviewTextInput" Text="{Binding NumberOfValuesPerArray, UpdateSourceTrigger=PropertyChanged}" />
-            <Button x:Name="NavigateToChartViewButton" Content="Show Charts" Command="{Binding NavigateToChartViewCommand}" Click="NavigateToChartViewButton_Click_1" />
+            <Button x:Name="NavigateToChartViewButton" Content="Show Charts" Command="{Binding NavigateToChartViewCommand}"/>
             <fa:ImageAwesome x:Name="RefreshSign" Icon="Refresh" Margin="0 20 0 0" Spin="True" Height="48" Width="48" Visibility="{Binding SpinnerVisibility}"/>
         </StackPanel>
     </Grid>

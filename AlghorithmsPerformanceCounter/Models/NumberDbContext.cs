@@ -9,7 +9,7 @@ namespace AlghorithmsPerformanceCounter.Models
 {
 	public class NumberDbContext : DbContext
 	{
-		public DbSet<Number> Numbers { get; set; }
+		public DbSet<NumberModelDb> Numbers { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{

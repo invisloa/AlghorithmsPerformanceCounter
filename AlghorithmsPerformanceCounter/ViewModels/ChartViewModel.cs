@@ -100,7 +100,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				{
 					foreach (var num in ArraySizes[i])
 					{
-						db.Numbers.Add(new Number { Value = num, ArrayId = i + 1 });  // ArrayId is i+1
+						db.Numbers.Add(new NumberModelDb { Value = num, ArrayId = i + 1 });  // ArrayId is i+1
 					}
 				}
 				db.SaveChanges();  // Saves all changes to the database

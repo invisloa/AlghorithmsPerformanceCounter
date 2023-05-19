@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:AlghorithmsPerformanceCounter"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             d:DesignHeight="750" d:DesignWidth="800"
-             >
+             d:DesignHeight="850" d:DesignWidth="800">
+
     <StackPanel>
         <StackPanel>
             <Grid>
@@ -47,12 +47,14 @@
         </StackPanel>
         <TextBlock Text="Algorithms Actions Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
 
-        <lvc:CartesianChart MinHeight="200" x:Name="ActionsCountChart" Zoom="Xy" />
+        <lvc:CartesianChart MinHeight="200" x:Name="ActionsCountChart" DisableAnimations="True" IsManipulationEnabled="False"  Zoom="Xy" 
+                            AllowDrop="False"  Focusable="False" Hoverable="False"  />
 
         <TextBlock Text="Algorithms Time Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
 
-        <lvc:CartesianChart MinHeight="200" x:Name="TimeComplexityChart" Zoom="Xy" />
+        <lvc:CartesianChart MinHeight="200" x:Name="TimeComplexityChart" IsManipulationEnabled="False" DisableAnimations="True" Zoom="Xy" 
+                            AllowDrop="False"/>
 
-        <Button x:Name="BackToMainViewButton" Content="Back to Main View" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,10" Command="{Binding NavigateBackToMainViewCommand}" />
+        <Button x:Name="BackToMainViewButton" Content="Back to Main View" HorizontalAlignment="Left"  IsManipulationEnabled="False" VerticalAlignment="Bottom" Margin="10,10" Command="{Binding NavigateBackToMainViewCommand}" />
     </StackPanel>
 </UserControl>

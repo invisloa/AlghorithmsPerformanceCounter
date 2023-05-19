@@ -1,4 +1,5 @@
 ﻿using AlghorithmsPerformanceCounter.Models;
+using AlghorithmsPerformanceCounter.Models.Algorithms.PerformancesCounting;
 using AlghorithmsPerformanceCounter.Services;
 using AlghorithmsPerformanceCounter.ViewModels;
 using LiveCharts;
@@ -94,57 +95,34 @@ namespace AlghorithmsPerformanceCounter
 
 		async Task PopulateTimeChartsAsync()
 		{
-			var chartViewModel = DataContext as ChartViewModel;
-			var arraySizesLabels = chartViewModel.ArraySizes.Select(array => array.Length.ToString()).ToList();
-			TimeComplexityChart.AxisX.Add(new LiveCharts.Wpf.Axis
-			{
-				Title = "Array Sizes",
-				Labels = arraySizesLabels,
-			});
-			TimeComplexityChart.AxisY.Add(new LiveCharts.Wpf.Axis
-			{
-				Title = "Time Complexity",
-				LabelFormatter = value => value.ToString()
-			});
-			TimeComplexityChart.LegendLocation = LiveCharts.LegendLocation.Right;
-			TimeComplexityChart.Series.Clear();
-			SeriesCollection series = new SeriesCollection();
-			var algorithmNames = chartViewModel.AlgorithmsNames;
-			var sortingPerformanceForAllArraysAndAlgorithms = await chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
-
-			for (int i = 0; i < algorithmNames.Count; i++)
-			{
-				List<long> values = new List<long>();
-				for (int j = 0; j < arraySizesLabels.Count; j++)
-				{
-					var data = sortingPerformanceForAllArraysAndAlgorithms[i][j].Stopwatch.ElapsedTicks;
-					values.Add(data);
-				}
-				series.Add(new LineSeries()
-				{
-					Title = algorithmNames[i],
-					Values = new ChartValues<long>(values)
-				});
-			}
-			TimeComplexityChart.Series = series;
+			await PopulateChartAsync(TimeComplexityChart, "Time Complexity", performance => performance.Stopwatch.ElapsedTicks);
 		}
 
 		async Task PopulateActionsChartsAsync()
 		{
+			await PopulateChartAsync(ActionsCountChart, "Actions Count", performance => performance.ActionsTaken);
+		}
+		async Task PopulateChartAsync(LiveCharts.Wpf.CartesianChart chart, string yAxisTitle, Func<IAlgorithmPerformanceCounter, long> getValue)
+		{
 			var chartViewModel = DataContext as ChartViewModel;
 			var arraySizesLabels = chartViewModel.ArraySizes.Select(array => array.Length.ToString()).ToList();
-			ActionsCountChart.AxisX.Add(new LiveCharts.Wpf.Axis
+
+			chart.AxisX.Clear();
+			chart.AxisX.Add(new LiveCharts.Wpf.Axis
 			{
 				Title = "Array Sizes",
 				Labels = arraySizesLabels,
 			});
-			ActionsCountChart.AxisY.Add(new LiveCharts.Wpf.Axis
+
+			chart.AxisY.Clear();
+			chart.AxisY.Add(new LiveCharts.Wpf.Axis
 			{
-				Title = "Time Complexity",
+				Title = yAxisTitle,
 				LabelFormatter = value => value.ToString()
 			});
-			ActionsCountChart.LegendLocation = LiveCharts.LegendLocation.Right;
-			ActionsCountChart.Series.Clear();
+
+			chart.LegendLocation = LiveCharts.LegendLocation.Right;
+			chart.Series.Clear();
 			SeriesCollection series = new SeriesCollection();
 			var algorithmNames = chartViewModel.AlgorithmsNames;
 			var sortingPerformanceForAllArraysAndAlgorithms = await chartViewModel.SortingPerformanceForAllArraysAndAlgorithms;
@@ -154,18 +132,18 @@ namespace AlghorithmsPerformanceCounter
 				List<long> values = new List<long>();
 				for (int j = 0; j < arraySizesLabels.Count; j++)
 				{
-					var data = sortingPerformanceForAllArraysAndAlgorithms[i][j].ActionsTaken;
+					var data = getValue(sortingPerformanceForAllArraysAndAlgorithms[i][j]);
 					values.Add(data);
 				}
 				series.Add(new LineSeries()
 				{
 					Title = algorithmNames[i],
-					Values = new ChartValues<long>(values)
+					Values = new ChartValues<long>(values),
+					PointGeometry = DefaultGeometries.None
 				});
 			}
-			ActionsCountChart.Series = series;
+			chart.Series = series;
 		}
-
 
 		//Synchronize ScrollBars REGION
 		#region Synchronize ScrollBars

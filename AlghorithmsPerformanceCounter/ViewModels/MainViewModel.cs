@@ -20,10 +20,11 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		private int _arrayIncementFactor = 2;
 		private int _numberOfValuesPerArray = 1000;
 		private bool _isSpinnerActive = false; // TO DO TO CHANGE
-		IArrayInitializer arrayInitializer = Factory.CreateArrayInitializer;
+		IArrayInitializer arrayInitializer;
 		public event PropertyChangedEventHandler PropertyChanged;
 		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_arrayIncementFactor, _numberOfValuesPerArray); }
 		public List<AlgorithmSelection> AlgorithmSelections { get; }
+
 		public bool IsSpinnerActive // TO DO TO CHANGE
 		{
 			get => _isSpinnerActive;
@@ -45,6 +46,35 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				OnPropertyChanged(nameof(SpinnerVisibility));
 			}
 		}
+
+
+
+
+
+		public List<IArrayInitializer> ArrayInitializers { get; }
+		public IArrayInitializer SelectedArrayInitializer
+		{
+			get => arrayInitializer;
+			set
+			{
+				arrayInitializer = value;
+				OnPropertyChanged(nameof(SelectedArrayInitializer));
+				OnPropertyChanged(nameof(MultipleArrays));
+			}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
 		// RelayCommands
 		#region Commands
 		private ICommand _navigateToChartViewCommand;
@@ -86,6 +116,33 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		public MainViewModel()
 		{
 			AlgorithmSelections = Factory.AllSortingAlgorithmsList.Select(alg => new AlgorithmSelection { Algorithm = alg, IsSelected = true }).ToList();
+			var efmssqlAlgorithmSelection = AlgorithmSelections.FirstOrDefault(alg => alg.Algorithm.Name == "EFMSSQL");
+			if(efmssqlAlgorithmSelection!= null)
+			{
+				efmssqlAlgorithmSelection.IsSelected = false;
+			}
+			var linqAlgorithmSelection = AlgorithmSelections.FirstOrDefault(alg => alg.Algorithm.Name == "Linq Sort");
+			if(linqAlgorithmSelection!= null)
+			{
+				linqAlgorithmSelection.IsSelected = false;
+			}
+
+
+
+
+
+				ArrayInitializers = new List<IArrayInitializer>
+				{
+					Factory.CreateArrayInitializerRandom,
+					Factory.CreateArrayInitializerWorstCase,
+					Factory.CreateArrayInitializerBestCase,
+				};
+				SelectedArrayInitializer = ArrayInitializers[0];
+		
+
+
+
+
 		}
 		protected virtual void OnPropertyChanged(string propertyName = null)
 		{

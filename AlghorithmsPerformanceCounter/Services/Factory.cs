@@ -17,11 +17,13 @@ namespace AlghorithmsPerformanceCounter.Services
 			CreateBubleSorter,
 			CreateInsertionSorter,
 			CreateHeapSorter,
-			//CreateMergeSorter,
+			CreateMergeSorter,
 			CreateLinqSort,
 			CreateEFMSSQL
 		};
-		public static IArrayInitializer CreateArrayInitializer => new ArrayInitializer();
+		public static IArrayInitializer CreateArrayInitializerWorstCase => new ArrayInitializerWorstCase();
+		public static IArrayInitializer CreateArrayInitializerBestCase => new ArrayInitializerBestCase();
+		public static IArrayInitializer CreateArrayInitializerRandom => new ArrayInitializerRandom();
 
 
 		//Creators for all available algorithms

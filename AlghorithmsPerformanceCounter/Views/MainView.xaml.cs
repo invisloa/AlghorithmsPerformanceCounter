@@ -21,9 +21,5 @@ namespace AlghorithmsPerformanceCounter
 			}
 		}
 
-		private void NavigateToChartViewButton_Click_1(object sender, RoutedEventArgs e)
-		{
-			RefreshSign.Visibility = Visibility.Visible;
-		}
 	}
 }

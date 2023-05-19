@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlghorithmsPerformanceCounter.Models
 {
-	public class Number
+	public class NumberModelDb
 	{
 		public int Id { get; set; }
 		public int Value { get; set; }
