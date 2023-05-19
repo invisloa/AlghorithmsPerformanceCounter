@@ -15,7 +15,7 @@ namespace AlghorithmsPerformanceCounter.Models.ArrayInitializers
 		public int[][] InitializeMultipleArrays(int arrayIncrementValue, int maxNumberOfValues)
 		{
 			// number of arrays but first array is always of size 3
-			int howManySubarrays = ((maxNumberOfValues - minArraySize) / arrayIncrementValue) + 2;
+			int howManySubarrays = ((maxNumberOfValues - minArraySize) / arrayIncrementValue) + 1;
 			int[][] arrayOfArrays = new int[howManySubarrays][];
 			int[] baseArray = SingleArrayInitializer(maxNumberOfValues);
 			int[] firstArray = new int[minArraySize];

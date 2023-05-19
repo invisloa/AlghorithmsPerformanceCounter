@@ -33,18 +33,20 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			performanceCounter.IncrementActionsTaken();
 			if (left < right) 
 			{
-				int pivotIndex = Partition(array, left, right);
+				int pivotIndex = Partition(array, left, right, performanceCounter);
 				QSort(array, left, pivotIndex - 1, performanceCounter);
 				QSort(array, pivotIndex + 1, right, performanceCounter);
 			}
 		}
 
-		int Partition(int[] array, int left, int right)
+		int Partition(int[] array, int left, int right, IAlgorithmPerformanceCounter performanceCounter)
 		{ 
+
 			int pivot = array[right];
 			int i = left - 1;
 			for (int j = left; j < right; j++)
 			{
+				performanceCounter.IncrementActionsTaken();
 				if (array[j] <= pivot)
 				{
 					i++;

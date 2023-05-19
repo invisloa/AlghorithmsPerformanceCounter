@@ -23,11 +23,14 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 				int n = copyArrayToSort.Length;
 				for (int i = 0; i < n - 1; i++)
 				{
+					performanceCounter.IncrementActionsTaken();
+
 					for (int j = 0; j < n - i - 1; j++)
 					{
+						performanceCounter.IncrementActionsTaken();
+
 						if (copyArrayToSort[j] > copyArrayToSort[j + 1])
 						{
-							performanceCounter.IncrementActionsTaken();
 							int temp = copyArrayToSort[j];
 							copyArrayToSort[j] = copyArrayToSort[j + 1];
 							copyArrayToSort[j + 1] = temp;

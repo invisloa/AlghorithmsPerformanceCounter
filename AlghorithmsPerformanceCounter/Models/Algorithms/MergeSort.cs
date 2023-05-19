@@ -29,6 +29,8 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 		}
 		void MSort(int[] arr, IAlgorithmPerformanceCounter performanceCounter)
 		{
+			performanceCounter.IncrementActionsTaken();
+
 			if (arr.Length < 2)
 			{
 				return;
@@ -45,7 +47,6 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			MSort(right, performanceCounter);
 
 			Merge(arr, left, right, performanceCounter);
-			performanceCounter.Stopwatch.Stop();
 		}
 
 		void Merge(int[] arr, int[] left, int[] right, IAlgorithmPerformanceCounter performanceCounter)
