@@ -47,7 +47,7 @@
         </StackPanel>
         <TextBlock Text="Algorithms Actions Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>
 
-        <lvc:CartesianChart IsEnabled="False" MinHeight="200" x:Name="ActionsCountChart" DisableAnimations="True" IsManipulationEnabled="False"  Zoom="Xy" 
+        <lvc:CartesianChart MinHeight="200" x:Name="ActionsCountChart" DisableAnimations="True" IsManipulationEnabled="False"  Zoom="Xy" 
                             AllowDrop="False"  Focusable="False" Hoverable="False"  />
 
         <TextBlock Text="Algorithms Time Charts" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10"/>

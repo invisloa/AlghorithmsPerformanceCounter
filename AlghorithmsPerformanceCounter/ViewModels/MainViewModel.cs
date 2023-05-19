@@ -46,11 +46,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				OnPropertyChanged(nameof(SpinnerVisibility));
 			}
 		}
-
-
-
-
-
 		public List<IArrayInitializer> ArrayInitializers { get; }
 		public IArrayInitializer SelectedArrayInitializer
 		{
@@ -62,19 +57,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				OnPropertyChanged(nameof(MultipleArrays));
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
 		// RelayCommands
 		#region Commands
 		private ICommand _navigateToChartViewCommand;
@@ -135,10 +117,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				linqAlgorithmSelection.IsSelected = false;
 			}
 
-
-
-
-
 				ArrayInitializers = new List<IArrayInitializer>
 				{
 					Factory.CreateArrayInitializerRandom,
@@ -146,11 +124,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 					Factory.CreateArrayInitializerBestCase,
 				};
 				SelectedArrayInitializer = ArrayInitializers[0];
-		
-
-
-
-
 		}
 		protected virtual void OnPropertyChanged(string propertyName = null)
 		{

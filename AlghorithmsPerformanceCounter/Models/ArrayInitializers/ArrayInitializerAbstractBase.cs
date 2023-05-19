@@ -15,13 +15,16 @@ namespace AlghorithmsPerformanceCounter.Models.ArrayInitializers
 		public int[][] InitializeMultipleArrays(int arrayIncrementValue, int maxNumberOfValues)
 		{
 			// number of arrays but first array is always of size 3
-			int howManySubarrays = ((maxNumberOfValues - minArraySize) / arrayIncrementValue) + 1;
+			int howManySubarrays = (maxNumberOfValues / arrayIncrementValue)+1;
 			int[][] arrayOfArrays = new int[howManySubarrays][];
 			int[] baseArray = SingleArrayInitializer(maxNumberOfValues);
 			int[] firstArray = new int[minArraySize];
-			int currentArraySize = minArraySize;
-			int currentCreatedArrayIndex = 0;
-			while (currentArraySize < maxNumberOfValues)
+			Array.Copy(baseArray, 0, firstArray, 0, firstArray.Length);
+			int currentArraySize = arrayIncrementValue;
+
+			arrayOfArrays[0] = firstArray;
+			int currentCreatedArrayIndex = 1; 
+			while (currentArraySize <= maxNumberOfValues)
 			{
 				int[] arrayToAdd = new int[currentArraySize];
 				Array.Copy(baseArray, 0, arrayToAdd, 0, currentArraySize);
