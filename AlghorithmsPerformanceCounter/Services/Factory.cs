@@ -18,6 +18,7 @@ namespace AlghorithmsPerformanceCounter.Services
 			CreateInsertionSorter,
 			CreateHeapSorter,
 			CreateMergeSorter,
+			CreatePermutationSort,
 			CreateLinqSort,
 			CreateEFMSSQL
 		};
@@ -35,7 +36,8 @@ namespace AlghorithmsPerformanceCounter.Services
 		public static AbstractSortingAlgorithm CreateHeapSorter => new Heapsort();
 		public static AbstractSortingAlgorithm CreateLinqSort => new LinqSort();
 		public static AbstractSortingAlgorithm CreateEFMSSQL => new EFMSSQL();
-
+		public static AbstractSortingAlgorithm CreatePermutationSort => new PermutationSort();
+		
 		#endregion
 
 		public static IAllAlgorithmsPerformanceCounter CreateAllAlgorithmsSorter => new AllAlgorithmsPerformanceCounter(AllSortingAlgorithmsList);

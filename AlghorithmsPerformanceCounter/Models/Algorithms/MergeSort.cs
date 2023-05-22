@@ -51,7 +51,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 
 		void Merge(int[] arr, int[] left, int[] right, IAlgorithmPerformanceCounter performanceCounter)
 		{
-			performanceCounter.IncrementActionsTaken(); // merge is a meaningful operation (consulted)
+			//performanceCounter.IncrementActionsTaken(); // merge is a meaningful operation (consulted)
 
 			int i = 0;
 			int j = 0;
@@ -59,6 +59,8 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 
 			while (i < left.Length && j < right.Length)
 			{
+				performanceCounter.IncrementActionsTaken(); // merge is a meaningful operation (consulted)
+
 				if (left[i] <= right[j])
 				{
 					arr[k++] = left[i++];
