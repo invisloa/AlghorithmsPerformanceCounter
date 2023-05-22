@@ -18,14 +18,14 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		private const int MinValuesPerArray = 1;
 		private const int MaxValuesPerArray = 1000000;
 		private int _arrayIncementFactor = 2;
-		private int _numberOfValuesPerArray = 1000;
-		private bool _isSpinnerActive = false; // TO DO TO CHANGE
+		private int _mainArraySize = 1000;
+		private bool _isSpinnerActive = false;
 		IArrayInitializer arrayInitializer;
 		public event PropertyChangedEventHandler PropertyChanged;
-		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_arrayIncementFactor, _numberOfValuesPerArray); }
+		public int[][] MultipleArrays { get => arrayInitializer.InitializeMultipleArrays(_arrayIncementFactor, _mainArraySize); }
 		public List<AlgorithmSelection> AlgorithmSelections { get; }
 
-		public bool IsSpinnerActive // TO DO TO CHANGE
+		public bool IsSpinnerActive 
 		{
 			get => _isSpinnerActive;
 			set
@@ -80,27 +80,30 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 				if (_arrayIncementFactor != value)
 				{
 					_arrayIncementFactor = value;
-					OnPropertyChanged(nameof(ArrayIncrementFactor));
-					if(_arrayIncementFactor > NumberOfValuesPerArray)
+					if(_arrayIncementFactor > MainArraySize)
 					{
-						NumberOfValuesPerArray = _arrayIncementFactor;
+						MainArraySize = _arrayIncementFactor;
+						OnPropertyChanged(nameof(MainArraySize));
 					}
+					OnPropertyChanged(nameof(ArrayIncrementFactor));
+
 				}
 			}
 		}
-		public int NumberOfValuesPerArray
+		public int MainArraySize
 		{
-			get { return _numberOfValuesPerArray; }
+			get { return _mainArraySize; }
 			set
 			{
-				if (_numberOfValuesPerArray != value)
+				if (_mainArraySize != value)
 				{
-					if (_arrayIncementFactor > _numberOfValuesPerArray)
+					if (value < _arrayIncementFactor)
 					{
-						_numberOfValuesPerArray = _arrayIncementFactor;
+						_arrayIncementFactor = Math.Min(MainArraySize, _arrayIncementFactor);
 					}
-					_numberOfValuesPerArray = Math.Clamp(value, MinValuesPerArray, MaxValuesPerArray);
-					OnPropertyChanged(nameof(NumberOfValuesPerArray));
+					_mainArraySize = Math.Clamp(value, MinValuesPerArray, MaxValuesPerArray);
+					OnPropertyChanged(nameof(MainArraySize));
+					OnPropertyChanged(nameof(ArrayIncrementFactor));
 				}
 			}
 		}
@@ -110,9 +113,14 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		{
 			AlgorithmSelections = Factory.AllSortingAlgorithmsList.Select(alg => new AlgorithmSelection { Algorithm = alg, IsSelected = true }).ToList();
 			var efmssqlAlgorithmSelection = AlgorithmSelections.FirstOrDefault(alg => alg.Algorithm.Name == "EFMSSQL");
-			if(efmssqlAlgorithmSelection!= null)
+			if (efmssqlAlgorithmSelection != null)
 			{
 				efmssqlAlgorithmSelection.IsSelected = false;
+			}
+			var permutationAlgorithmSelection = AlgorithmSelections.FirstOrDefault(alg => alg.Algorithm.Name == "Permutation Sort");
+			if (permutationAlgorithmSelection != null)
+			{
+				permutationAlgorithmSelection.IsSelected = false;
 			}
 			var linqAlgorithmSelection = AlgorithmSelections.FirstOrDefault(alg => alg.Algorithm.Name == "Linq Sort");
 			if(linqAlgorithmSelection!= null)

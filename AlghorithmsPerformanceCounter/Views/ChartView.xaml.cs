@@ -95,7 +95,7 @@ namespace AlghorithmsPerformanceCounter
 
 		async Task PopulateTimeChartsAsync()
 		{
-			await PopulateChartAsync(TimeComplexityChart, "Time Complexity", performance => performance.Stopwatch.ElapsedTicks);
+			await PopulateChartAsync(TimeComplexityChart, "Time Complexity (ms)", performance => performance.Stopwatch.ElapsedTicks);
 		}
 
 		async Task PopulateActionsChartsAsync()
@@ -118,7 +118,7 @@ namespace AlghorithmsPerformanceCounter
 			chart.AxisY.Add(new LiveCharts.Wpf.Axis
 			{
 				Title = yAxisTitle,
-				LabelFormatter = value => value.ToString()
+				
 			});
 
 			chart.LegendLocation = LiveCharts.LegendLocation.Right;

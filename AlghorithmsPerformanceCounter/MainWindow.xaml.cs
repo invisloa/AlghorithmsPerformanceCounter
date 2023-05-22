@@ -13,7 +13,8 @@ namespace AlghorithmsPerformanceCounter
 			var mainViewModel = new MainViewModel();
 			DataContext = mainViewModel;
 			InitializeComponent();
-
+			Width = 1200;
+			Height = 850;
 			mainViewModel.NavigateToChartView = async () =>
 			{
 				mainViewModel.IsSpinnerActive = true;
