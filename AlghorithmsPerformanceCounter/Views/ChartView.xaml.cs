@@ -33,7 +33,7 @@ namespace AlghorithmsPerformanceCounter
 			PopulateArraysSizesTable();
 			ArraySizeItemsControl.Loaded += ArraySizeTable_Loaded;
 			PerformancesTable.Loaded += PerformancesTable_Loaded;
-			chartViewModel.NavigateBackToMainViewCommand = new RelayCommand(param => chartViewModel.NavigateBackToMainView());
+			chartViewModel.NavigateBackToMainViewCommand = new RelayCommand(_ => chartViewModel.NavigateBackToMainView());
 		}
 		public static async Task<ChartView> CreateAsync(ChartViewModel chartViewModel)
 		{
@@ -47,7 +47,6 @@ namespace AlghorithmsPerformanceCounter
 			await PopulatePerformancesTableAsync();
 			await PopulateActionsChartsAsync();
 			await PopulateTimeChartsAsync();
-
 		}
 		void PopulateArraysSizesTable()
 		{
@@ -176,7 +175,7 @@ namespace AlghorithmsPerformanceCounter
 			_arraySizeTableScrollViewer.ScrollToHorizontalOffset(e.HorizontalOffset);
 		}
 
-		// This helper method finds the ScrollViewer within the DataGrid control template.
+		// helper method to find the ScrollViewer within the DataGrid control template.
 		private ScrollViewer GetScrollViewer(DependencyObject depObj)
 		{
 			if (depObj is ScrollViewer) return depObj as ScrollViewer;

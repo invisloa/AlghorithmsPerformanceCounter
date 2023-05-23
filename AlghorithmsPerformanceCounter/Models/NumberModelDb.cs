@@ -10,7 +10,7 @@ namespace AlghorithmsPerformanceCounter.Models
 	{
 		public int Id { get; set; }
 		public int Value { get; set; }
-		public int ArrayId { get; set; }  // New property to distinguish different arrays
+		public int ArrayId { get; set; }  //  property to distinguish different arrays
 
 	}
 }

@@ -19,7 +19,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 		public async Task<ObservableCollection<IAlgorithmPerformanceCounter>> SortAndListPerformancesAsync(int[][] arrays)
 		{
 			ObservableCollection<IAlgorithmPerformanceCounter> listOfPerformancesCounters = new ObservableCollection<IAlgorithmPerformanceCounter>();
-			foreach (int[] arrayToSort in arrays)                                       // Sorting each array in all arrays
+			foreach (int[] arrayToSort in arrays)                                       // Sorting each array in list of all arrays
 			{
 				listOfPerformancesCounters.Add(await SortArray(arrayToSort));			// Sorting by one of the algorithms
 			}

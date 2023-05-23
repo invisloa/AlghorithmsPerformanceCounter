@@ -63,10 +63,10 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 		// RelayCommands
 		#region Commands
 		private ICommand _navigateToChartViewCommand;
-		public ICommand NavigateToChartViewCommand => _navigateToChartViewCommand ??= new RelayCommand(param => NavigateToChartView(), param => true);
+		public ICommand NavigateToChartViewCommand => _navigateToChartViewCommand ??= new RelayCommand(_ => NavigateToChartView(), _ => true);
 
 		private ICommand _navigateBackToMainViewCommand;
-		public ICommand NavigateBackToMainViewCommand => _navigateBackToMainViewCommand ??= new RelayCommand(param => NavigateBackToMainView(), param => true);
+		public ICommand NavigateBackToMainViewCommand => _navigateBackToMainViewCommand ??= new RelayCommand(_ => NavigateBackToMainView(), _ => true);
 
 		public Action NavigateToChartView { get; set; }
 		public Action NavigateBackToMainView { get; set; }
