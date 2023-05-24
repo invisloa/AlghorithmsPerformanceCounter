@@ -1,4 +1,5 @@
-﻿using AlghorithmsPerformanceCounter.Models;
+﻿
+using AlghorithmsPerformanceCounter.Models;
 using AlghorithmsPerformanceCounter.Models.Algorithms;
 using AlghorithmsPerformanceCounter.Models.ArrayInitializers;
 using AlghorithmsPerformanceCounter.Services;
@@ -86,7 +87,6 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 						OnPropertyChanged(nameof(MainArraySize));
 					}
 					OnPropertyChanged(nameof(ArrayIncrementFactor));
-
 				}
 			}
 		}
@@ -97,11 +97,11 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 			{
 				if (_mainArraySize != value)
 				{
+					_mainArraySize = Math.Clamp(value, MinValuesPerArray, MaxValuesPerArray);
 					if (value < _arrayIncementFactor)
 					{
-						_arrayIncementFactor = Math.Min(MainArraySize, _arrayIncementFactor);
+						_arrayIncementFactor = Math.Min(_mainArraySize, _arrayIncementFactor);
 					}
-					_mainArraySize = Math.Clamp(value, MinValuesPerArray, MaxValuesPerArray);
 					OnPropertyChanged(nameof(MainArraySize));
 					OnPropertyChanged(nameof(ArrayIncrementFactor));
 				}
