@@ -25,15 +25,15 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 				{
 					performanceCounter.IncrementActionsTaken();
 
-					for (int j = 0; j < n - i - 1; j++)
+					for (int j = 0; j < n - i - 1; j++)							// for every item in array
 					{
 						performanceCounter.IncrementActionsTaken();
 
-						if (copyArrayToSort[j] > copyArrayToSort[j + 1])
+						if (copyArrayToSort[j] > copyArrayToSort[j + 1])		// check if next item of array is >
 						{
-							int temp = copyArrayToSort[j];
+							int temp = copyArrayToSort[j];						
 							copyArrayToSort[j] = copyArrayToSort[j + 1];
-							copyArrayToSort[j + 1] = temp;
+							copyArrayToSort[j + 1] = temp;						// if next element is > switch their places
 						}
 					}
 				}
