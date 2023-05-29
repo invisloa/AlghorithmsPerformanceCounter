@@ -21,7 +21,7 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			{
 				using (var dbContext = new NumberDbContext())
 				{
-					// Calculate the ArrayId by checking the cumulative size of the arrays
+					// ArrayId is used to specify which array is being used - no need to create separate table for each array
 					int arrayId = 1;
 					int cumulativeSize = 0;
 					while (cumulativeSize < array.Length)
@@ -32,11 +32,11 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 					// Decrement arrayId because it's incremented one extra time in the loop
 					arrayId--;
 					// Get and sort the numbers with this ArrayId
-					performanceCounter.Stopwatch.Start();   // START COUNTING TIME
+					performanceCounter.Stopwatch.Start();   // START TIME
 
-					var count = dbContext.Numbers.Where(x => x.ArrayId == arrayId).First(); ;  // USING First TO MATERIALIZE THE QUERRY TIME (First SIGNIFICANTLY REDUCES THE TIME)
+					var count = dbContext.Numbers.Where(x => x.ArrayId == arrayId).First(); ;  // USING First TO MATERIALIZE THE QUERRY TIME (no need to copy all array)
 
-					performanceCounter.Stopwatch.Stop();    // END COUNTING TIME
+					performanceCounter.Stopwatch.Stop();    // END TIME
 
 				}
 			});

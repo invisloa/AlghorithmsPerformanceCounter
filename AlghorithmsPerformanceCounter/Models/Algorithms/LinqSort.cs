@@ -22,7 +22,8 @@ namespace AlghorithmsPerformanceCounter.Models.Algorithms
 			await Task.Run(() =>
 			{
 				performanceCounter.Stopwatch.Start();
-				copyArrayToSort = array.OrderBy(x => x).ToArray();
+				//copyArrayToSort = array.OrderBy(x => x).ToArray();	// To array takes some extra time for creating an array
+				int x = array.OrderBy(x => x).First();					// First takes less time but also sorts the array
 				performanceCounter.Stopwatch.Stop();
 			});
 			return performanceCounter;
