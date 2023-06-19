@@ -103,7 +103,7 @@ namespace AlghorithmsPerformanceCounter.ViewModels
 						db.Numbers.Add(new NumberModelDb { Value = num, ArrayId = i + 1 });  // ArrayId is i+1
 					}
 				}
-				db.SaveChanges();  // Saves all changes to the database
+				db.SaveChanges();
 			}
 		}
 
